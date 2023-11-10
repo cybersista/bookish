@@ -13,8 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       noPayment: {
-        type: Sequelize.CHAR,
-        values: '25'
+        type: Sequelize.CHAR(25)
       },
       createdAt: {
         allowNull: false,

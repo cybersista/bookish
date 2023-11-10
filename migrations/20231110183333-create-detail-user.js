@@ -31,12 +31,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       kodePos: {
-        type: Sequelize.CHAR,
-        values: '5'
+        type: Sequelize.CHAR(5)
       },
       telepon: {
-        type: Sequelize.CHAR,
-        values : '12'
+        type: Sequelize.CHAR(12)
       },
       createdAt: {
         allowNull: false,

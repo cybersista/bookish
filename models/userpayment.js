@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   userPayment.init({
     provider: DataTypes.STRING,
-    noPayment: DataTypes.CHAR
+    noPayment: DataTypes.CHAR(25)
   }, {
     sequelize,
     modelName: 'userPayment',
