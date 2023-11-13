@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       detailUser.belongsTo(models.User, {as : 'users', foreignKey : 'userId'})
-      detailUser.belongsTo(models.userPayment, {as : 'userPayments', foreignKey : 'userPaymentId'})
+      
+      detailUser.hasMany(models.userPayment, {foreignKey : 'detailUserId', as : 'userPayments'})
     }
   }
   detailUser.init({
     userId: DataTypes.INTEGER,
-    userPaymentId: DataTypes.INTEGER,
     nama: DataTypes.STRING,
     alamat: DataTypes.STRING,
     kodePos: DataTypes.CHAR(5),

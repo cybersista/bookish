@@ -17,13 +17,6 @@ module.exports = {
           key   : 'id'
         }
       },
-      userPaymentId: {
-        type: Sequelize.INTEGER,
-        references : {
-          model : 'userPayments',
-          key   : 'id'
-        }
-      },
       nama: {
         type: Sequelize.STRING
       },

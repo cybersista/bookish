@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       Buku.belongsTo(models.Penulis, {as : 'penulis', foreignKey : 'penulisId'})
       Buku.belongsTo(models.Penerbit, {as : 'penerbits', foreignKey : 'penerbitId'})
       Buku.belongsTo(models.Kategori, {as : 'kategoris', foreignKey : 'kategoriId'})
+
+      Buku.hasMany(models.Gudang, {foreignKey : 'bukuId', as:'gudangs'})
+      Buku.hasMany(models.fileBuku, {foreignKey : 'bukuId', as:'fileBukus'})
+      Buku.hasMany(models.pesananItem, {foreignKey : 'bukuId', as:'pesananItems'})
+      Buku.hasMany(models.ulasanBuku, {foreignKey : 'bukuId', as:'ulasanBukus'})
     }
   }
   Buku.init({

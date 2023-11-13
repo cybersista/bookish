@@ -2,26 +2,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('userPayments', {
+    await queryInterface.createTable('returPesanans', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      detailUserId: {
-        allowNull: false,
+      pesananId: {
         type: Sequelize.INTEGER,
         references : {
-          model : 'detailUsers',
-          key   : 'id'
+          model : 'detailPesanans',
+          key : 'id'
         }
       },
-      provider: {
-        type: Sequelize.STRING
+      deskripsi: {
+        type: Sequelize.TEXT
       },
-      noPayment: {
-        type: Sequelize.CHAR(25)
+      statusRetur: {
+        type: Sequelize.ENUM,
+        values : ['Proses Review','Disetujui','Dikirim','Tidak Disetujui']
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('userPayments');
+    await queryInterface.dropTable('returPesanans');
   }
 };

@@ -2,26 +2,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('userPayments', {
+    await queryInterface.createTable('ulasanBukus', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      detailUserId: {
-        allowNull: false,
+      bukuId: {
         type: Sequelize.INTEGER,
         references : {
-          model : 'detailUsers',
-          key   : 'id'
+          model : 'Bukus',
+          key : 'id'
         }
       },
-      provider: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER,
+        references : {
+          model : 'Users',
+          key : 'id'
+        }
       },
-      noPayment: {
-        type: Sequelize.CHAR(25)
+      rating: {
+        type: Sequelize.DECIMAL(0,2)
+      },
+      komentar: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('userPayments');
+    await queryInterface.dropTable('ulasanBukus');
   }
 };
