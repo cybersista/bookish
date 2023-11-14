@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Penerbit.hasMany(models.Buku, {foreignKey : 'penulisId', as:'bukus'})
+      Penulis.hasMany(models.Buku, {foreignKey : 'penulisId', as:'bukus'})
     }
   }
   Penulis.init({
