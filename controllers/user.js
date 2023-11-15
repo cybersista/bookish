@@ -7,8 +7,12 @@ const registerAdmin = async (req, res, next) => {
   try {
     const { email, password, levelUser } = req.body;
 
-    if (levelUser !== 'admin' && levelUser !== 'member') {
-      return res.status(400).json({ message: 'Invalid levelUser. Must be admin or member.' });
+    if (!email || !password || !levelUser) {
+      return res.status(400).json({ message: 'Incomplete data. Please provide all required fields.' });
+    }
+
+    if (levelUser !== 'admin') {
+      return res.status(400).json({ message: 'Invalid levelUser for admin registration.' });
     }
 
     const newUser = await User.create({
@@ -22,15 +26,35 @@ const registerAdmin = async (req, res, next) => {
 
     res.status(201).json({ token });
   } catch (error) {
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({ message: 'Incomplete data. Please provide all required fields.' });
-    }
     next(error);
   }
 };
 
-// Login Admin
-const loginAdmin = async (req, res, next) => {
+// Register Member
+const registerMember = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Incomplete data. Please provide all required fields.' });
+    }
+
+    const newUser = await User.create({
+      email,
+      password,
+    });
+
+    const memberId = newUser.id;
+    const token = tokenSign({ userId: memberId, isAdmin: false });
+
+    res.status(201).json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Login
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -42,8 +66,9 @@ const loginAdmin = async (req, res, next) => {
     });
 
     if (result) {
-      const adminId = result.id;
-      const token = tokenSign({ userId: adminId, isAdmin: true });
+      const userId = result.id;
+      const isAdmin = result.levelUser === 'admin';
+      const token = tokenSign({ userId, isAdmin });
       res.status(200).json({ token });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
@@ -53,7 +78,7 @@ const loginAdmin = async (req, res, next) => {
   }
 };
 
-// Get All Admins
+// Get All Admins (only accessible by admin)
 const getAllAdmins = async (req, res, next) => {
   try {
     const result = await User.findAll({
@@ -68,7 +93,7 @@ const getAllAdmins = async (req, res, next) => {
   }
 };
 
-// Get Admin by ID
+// Get Admin by ID (only accessible by admin)
 const getAdminById = async (req, res, next) => {
   const adminId = req.params.id;
 
@@ -83,7 +108,44 @@ const getAdminById = async (req, res, next) => {
     if (result) {
       res.status(200).json(result);
     } else {
-      res.status(404).json({ message: 'Admin tidak ditemukan' });
+      res.status(404).json({ message: 'Admin not found' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get All Members (only accessible by admin)
+const getAllMembers = async (req, res, next) => {
+  try {
+    const result = await User.findAll({
+      where: {
+        levelUser: 'member',
+      },
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get Member by ID (only accessible by admin)
+const getMemberById = async (req, res, next) => {
+  const memberId = req.params.id;
+
+  try {
+    const result = await User.findOne({
+      where: {
+        id: memberId,
+        levelUser: 'member',
+      },
+    });
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: 'Member not found' });
     }
   } catch (error) {
     next(error);
@@ -92,7 +154,10 @@ const getAdminById = async (req, res, next) => {
 
 module.exports = {
   registerAdmin,
-  loginAdmin,
+  registerMember,
+  login,
   getAllAdmins,
   getAdminById,
+  getAllMembers,
+  getMemberById,
 };

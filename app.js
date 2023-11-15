@@ -38,7 +38,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use(morgan('common'));
 app.use(express.json());
 
-app.use('/user/admins', userRoutes); // perubahan di sini
+app.use('/user/', userRoutes); 
 
 app.use(errorHandling);
 
