@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,15 +13,19 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.detailPesanan, {foreignKey : 'userId', as:'detailPesanans'})
       User.hasMany(models.ulasanBuku, {foreignKey : 'userId', as:'ulasanBukus'})
       User.hasMany(models.komentarUlasanBuku, {foreignKey : 'userId', as:'komentarUlasanBukus'})
+      User.hasMany(models.point, { foreignKey: 'userId', as: 'userPoints' });
+      User.hasMany(models.event, { foreignKey: 'eventId', as: 'eventPoints' });
     }
   }
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     levelUser: DataTypes.ENUM('admin','member')
-  }, {
+  }, 
+  {
     sequelize,
     modelName: 'User',
   });
+
   return User;
 };

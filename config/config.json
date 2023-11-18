@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "postgres",
-    "password": "admin",
+    "password": "10052000",
     "database": "bookish",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "admin",
+    "password": "10052000",
     "database": "bookish_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "admin",
+    "password": "10052000",
     "database": "bookish_production",
     "host": "127.0.0.1",
     "dialect": "postgres"

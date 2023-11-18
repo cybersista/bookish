@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start"     : "nodemon app.js",
-    "db:create" : "sequelize-cli db:create",
+    "start": "nodemon app.js",
+    "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
-    "db:seed"   : "sequelize-cli db:seed:undo:all && sequelize-cli db:seed:all",
-    "db:setup"  : "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all"
+    "db:seed": "sequelize-cli db:seed:undo:all && sequelize-cli db:seed:all",
+    "db:setup": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",
