@@ -12,6 +12,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('Kategoris', [{
+      nama: 'Horror',
+      deskripsi: 'Ini adalah kumpulan buku horror',
+      createdAt : new Date(),
+      updatedAt: new Date()
+    }])
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +27,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('Kategoris', null, {});
   }
 };

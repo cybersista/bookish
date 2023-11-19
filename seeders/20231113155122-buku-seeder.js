@@ -12,6 +12,17 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('Bukus', [{
+      penulisId : 1 ,
+      penerbitId : 1,
+      kategoriId : 1,
+      judul: 2,
+      harga: 98.000 ,
+      isbn: 'S628381A',
+      tahunTerbit: '2018',
+      createdAt : new Date(),
+      updatedAt: new Date()
+    }])
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +32,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('Bukus', null, {});
   }
 };

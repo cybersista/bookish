@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "postgres",
-    "password": "admin",
-    "database": "bookish",
-    "host": "127.0.0.1",
+    "password": "1234567",
+    "database": "bookishh",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "admin",
-    "database": "bookish_test",
-    "host": "127.0.0.1",
+    "password": "1234567",
+    "database": "bookishh",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "admin",
-    "database": "bookish_production",
-    "host": "127.0.0.1",
+    "password": "1234567",
+    "database": "bookishh",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }

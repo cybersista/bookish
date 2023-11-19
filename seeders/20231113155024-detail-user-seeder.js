@@ -12,6 +12,24 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    await queryInterface.bulkInsert('detailUsers',[{
+      userId: 1,
+      nama: 'Devina',
+      alamat: 'Jl.Kecapi No.2',
+      kodePos: '2345',
+      telepon: '08976543210',
+      createdAt: new Date(),
+      updatedAt : new Date() 
+   }, 
+   {
+    userId: 2,
+    nama: 'Afina',
+    alamat: 'Jl.Kecapi No.2',
+    kodePos: '2345',
+    telepon: '08976543210',
+    createdAt: new Date(),
+    updatedAt : new Date() 
+ }])
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +39,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('detaiUsers', null, {})
   }
+  
 };
