@@ -1,29 +1,35 @@
 require('dotenv').config()
 
-const express        = require('express')
+const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
-const ejs            = require('ejs')
-const route          = require('./routes/index')
-const errorHandler   = require('./middlewares/error-handler')
-const cors           = require('cors')
-const bodyParser     = require('body-parser')
-const path           = require('path')
-var app              = express()
-const port           = process.env.PORT || 3000
+const ejs = require('ejs')
+const route = require('./routes/index')
+const errorHandler = require('./middlewares/error-handler')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const path = require('path')
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./config/swagger.json');
+const appRoutes = require('./routes/index');
 
-app.use(cors());
-app.use(bodyParser.json());
+const app = express();
+const port = 3000;
 
-app.set('views', path.join(__dirname,'public/views/'))
-app.set('view engine', 'ejs')
-app.use(expressLayouts)
 
-app.use('/', route)
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// app.use(errorHandler);
 
-if (process.env.APP_ENV != 'test') {
-    app.listen(port, () => {
-        console.log(`Listening on http://localhost:${port}`)
-    })
-}
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', appRoutes);
+
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
