@@ -31,7 +31,7 @@ module.exports = {
         }
       },
       judul: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       harga: {
         type: Sequelize.DECIMAL(10,2)

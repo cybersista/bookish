@@ -4,6 +4,7 @@ const path          = require('path')
 
 /** Inisialisasi disini router kalian */
 const userRoute = require('./user')
+const bukuRoute = require('./buku')
 
 router.get('/', (req,res) => {
     res.render('index',{
@@ -12,5 +13,5 @@ router.get('/', (req,res) => {
     })
 })
 router.use('/user', userRoute)
-
+router.use('/buku', bukuRoute)
 module.exports = router
