@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerAdmin, registerMember, login, getAllAdmins, getAdminById, getAllMembers, getMemberById } = require('../controllers/user');
+const { registerAdmin, login, getAllAdmins, getAdminById} = require('../controllers/user');
 const { authentication } = require('../middlewares/auth');
 
 /**
@@ -57,27 +57,6 @@ const { authentication } = require('../middlewares/auth');
  *         description: Internal Server Error
  */
 router.post('/admins/register', registerAdmin);
-
-/**
- * @swagger
- * /user/members/register:
- *   post:
- *     summary: Registrasi member baru
- *     tags: [Users]
- *     requestBody:
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *     responses:
- *       201:
- *         description: Registrasi Member berhasil!
- *       400:
- *         description: Invalid data or email already registered
- *       500:
- *         description: Internal Server Error
- */
-router.post('/members/register', registerMember);
 
 /**
  * @swagger
@@ -152,58 +131,5 @@ router.get('/admins', authentication, getAllAdmins);
  *         description: Internal Server Error!
  */
 router.get('/admins/:id', authentication, getAdminById);
-
-/**
- * @swagger
- * /user/members:
- *   get:
- *     summary: Get all members (only accessible by admin)
- *     tags: [Users]
- *     security:
- *       - MyAuth: []
- *     responses:
- *       200:
- *         description: Members berhasil diambil!
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       401:
- *         description: Unauthorized
- *       500:
- *         description: Internal Server Error!
- */
-router.get('/members', authentication, getAllMembers);
-
-/**
- * @swagger
- * /user/members/{id}:
- *   get:
- *     summary: Get member by ID (only accessible by admin)
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Member ID
- *         schema:
- *           type: integer
- *     security:
- *       - MyAuth: []
- *     responses:
- *       200:
- *         description: Member berhasil diambil!
- *         content:
- *           application/json:
- *             schema:
- *               $ref: "#/components/schemas/User"
- *       401:
- *         description: Unauthorized
- *       404:
- *         description: Member not found
- *       500:
- *         description: Internal Server Error!
- */
-router.get('/members/:id', authentication, getMemberById);
 
 module.exports = router;
