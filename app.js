@@ -10,6 +10,9 @@ const bodyParser     = require('body-parser')
 const path           = require('path')
 var app              = express()
 const port           = process.env.PORT || 3000
+const morgan         = require('morgan');
+const swaggerJsDoc   = require('swagger-jsdoc');
+const swaggerUI      = require('swagger-ui-express');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,6 +20,31 @@ app.use(bodyParser.json());
 app.set('views', path.join(__dirname,'public/views/'))
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.1.9',
+    info: {
+      title: 'API Admin',
+      version: '1.0.0',
+      description: 'Informasi API Admin',
+      servers: ['http://localhost:3000'],
+    },
+    components: {
+      securitySchemes: {
+        MyAuth: {
+          type: 'apiKey',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  apis: ['./routes/user.js'],
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use(morgan('common'));
 
 app.use('/', route)
 
