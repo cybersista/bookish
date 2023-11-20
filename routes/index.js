@@ -3,8 +3,7 @@ const router        = express.Router()
 const path          = require('path')
 
 /** Inisialisasi disini router kalian */
-
-
+const userRoute = require('./user')
 
 router.get('/', (req,res) => {
     res.render('index',{
@@ -12,5 +11,6 @@ router.get('/', (req,res) => {
         layout : 'layouts/main-layout'
     })
 })
+router.use('/user', userRoute)
 
 module.exports = router
