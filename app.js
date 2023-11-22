@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./config/swagger.json');
-const appRoutes = require('./routes/index');
+const appRoutes = require('./routes');
 
 const app = express();
 const port = 3000;
