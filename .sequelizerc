@@ -1,0 +1,11 @@
+const path = require("path")
+const dotenv = require("dotenv");
+
+const DB_DIR = path.join(__dirname, "db");
+
+dotenv.config();
+
+module.exports = {
+  "migrations-path": path.join(DB_DIR, "migrations"),
+  "seeders-path": path.join(DB_DIR, "seeders"),
+}
