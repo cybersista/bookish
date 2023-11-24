@@ -1,37 +1,23 @@
 {
   "development": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "10052000",
-=======
-    "password": "admin",
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
     "database": "bookish",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "10052000",
-    "database": "bookish",
-=======
-    "password": "admin",
     "database": "bookish_test",
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-<<<<<<< HEAD
     "password": "10052000",
-    "database": "bookish",
-=======
-    "password": "admin",
     "database": "bookish_production",
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }

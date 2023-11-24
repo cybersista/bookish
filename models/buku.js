@@ -18,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       Buku.hasMany(models.fileBuku, {foreignKey : 'bukuId', as:'fileBukus'})
       Buku.hasMany(models.pesananItem, {foreignKey : 'bukuId', as:'pesananItems'})
       Buku.hasMany(models.ulasanBuku, {foreignKey : 'bukuId', as:'ulasanBukus'})
-<<<<<<< HEAD
-=======
-      Buku.hasMany(models.shopping_session, {foreignKey : 'bukuId', as:'shopping_sessions'})
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
     }
   }
   Buku.init({

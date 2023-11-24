@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "test": "jest",
-=======
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
     "start": "nodemon app.js",
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
@@ -19,14 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
-<<<<<<< HEAD
     "dotenv": "^16.3.1",
-=======
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
     "jest": "^29.7.0",

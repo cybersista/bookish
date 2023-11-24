@@ -26,8 +26,4 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'detailUser',
   });
   return detailUser;
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 610c98bea290a8e57354ac19b8d2cfe51f2a786d
