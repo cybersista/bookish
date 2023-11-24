@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.detailPesanan, {foreignKey : 'userId', as:'detailPesanans'})
       User.hasMany(models.ulasanBuku, {foreignKey : 'userId', as:'ulasanBukus'})
       User.hasMany(models.komentarUlasanBuku, {foreignKey : 'userId', as:'komentarUlasanBukus'})
+      User.hasMany(models.shopping_session, {foreignKey : 'userId', as:'shopping_sessions'})
     }
   }
   User.init({
