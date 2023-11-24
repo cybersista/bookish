@@ -12,6 +12,6 @@ router.get('/', (req,res) => {
         layout : 'layouts/main-layout'
     })
 })
-router.use('/user', userRoute)
-router.use('/buku', bukuRoute)
+router.use('/my-account', userRoute)
+router.use('/kategori', bukuRoute)
 module.exports = router

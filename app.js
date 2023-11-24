@@ -25,9 +25,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.1.9',
     info: {
-      title: 'API Admin',
+      title: 'API Bookish',
       version: '1.0.0',
-      description: 'Informasi API Admin',
+      description: 'Informasi API dari Bookish - Mini Book E-commerce',
       servers: ['http://localhost:3000'],
     },
     components: {
@@ -40,7 +40,7 @@ const swaggerOptions = {
       },
     },
   },
-  apis: ['./routes/user.js'],
+  apis: ['./docs/docs.js'],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
