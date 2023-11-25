@@ -4,6 +4,7 @@
     "password": "admin",
     "database": "bookish",
     "host": "127.0.0.1",
+    "port": "5434",
     "dialect": "postgres"
   },
   "test": {
@@ -11,6 +12,7 @@
     "password": "admin",
     "database": "bookish_test",
     "host": "127.0.0.1",
+    "port": "5434",
     "dialect": "postgres"
   },
   "production": {
@@ -18,6 +20,7 @@
     "password": "admin",
     "database": "bookish_production",
     "host": "127.0.0.1",
+    "port": "5434",
     "dialect": "postgres"
   }
 }
