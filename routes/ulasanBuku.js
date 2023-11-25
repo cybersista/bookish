@@ -35,7 +35,7 @@ router.get('/', getAllUlasan);
  *       - MyAuth: []
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:

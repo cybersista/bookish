@@ -45,7 +45,7 @@ const { authentication } = require('../middlewares/auth');
  *     tags: [Users]
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/User'
  *     responses:
@@ -66,7 +66,7 @@ router.post('/admins/register', registerAdmin);
  *     tags: [Users]
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             $ref: '#/components/schemas/UserLogin'
  *     responses:
@@ -91,7 +91,7 @@ router.post('/login', login);
  *       200:
  *         description: Admins berhasil diambil!
  *         content:
- *           application/json:
+ *           multipart/form-data:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       401:
@@ -120,7 +120,7 @@ router.get('/admins', authentication, getAllAdmins);
  *       200:
  *         description: Admin berhasil diambil!
  *         content:
- *           application/json:
+ *           multipart/form-data:
  *             schema:
  *               $ref: "#/components/schemas/User"
  *       401:

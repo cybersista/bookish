@@ -57,7 +57,7 @@ router.get('/:id', getPenerbitById);
  *       - MyAuth: []
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -92,7 +92,7 @@ router.post('/', authentication, createPenerbit);
  *           type: integer
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:

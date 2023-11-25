@@ -57,7 +57,7 @@ router.get('/:id', getKategorisById);
  *       - MyAuth: []
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -94,7 +94,7 @@ router.post('/', authentication, createKategoris);
  *           type: integer
  *     requestBody:
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
