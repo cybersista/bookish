@@ -44,7 +44,7 @@
  *             example:
  *               status: 200
  *               message: Success
- *               data: { id: 1, /* other properties /* }
+ *             
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -67,7 +67,7 @@
  *         description: Returns a list of carts
  *         content:
  *           application/json:
- *             example: [{ id: 1, /* other properties /* }]
+ *             example: [{ seccsionid: 01, bukuid: 222, jumlah: 10 }]
  *       500:
  *         description: Internal Server Error
  *         content:
@@ -106,7 +106,7 @@
  *             example:
  *               status: 200
  *               message: Success
- *               data: { id: 1, /* other properties /* }
+ *               
  *       404:
  *         description: Cart not found
  *         content:
@@ -149,7 +149,7 @@
  *             example:
  *               status: 404
  *               message: Cart not found
- *               data: null
+ *          
  *       500:
  *         description: Internal Server Error
  *         content:
