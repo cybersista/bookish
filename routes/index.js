@@ -10,7 +10,7 @@ const bukuRoute = require('./buku')
 
 router.get('/', dashboardUser)
 router.post('/login', login)
-router.post('/register', login)
+router.post('/register', register)
 
 router.use('/my-account', userRoute)
 router.use('/kategori', bukuRoute)

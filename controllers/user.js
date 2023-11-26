@@ -19,9 +19,9 @@ const register = async (req, res, next) => {
 
     const userId = newUser.id;
     if (levelUser == 'admin') {
-      const token = tokenSign({ userId: userId, isAdmin: true });
+      token = tokenSign({ userId: userId, isAdmin: true });
     }else{
-      const token = tokenSign({ userId: memberId, isAdmin: false });
+      token = tokenSign({ userId: userId, isAdmin: false });
     }
     res.status(201).json({status: 201, message: 'Registration successful', token });
   } catch (error) {
