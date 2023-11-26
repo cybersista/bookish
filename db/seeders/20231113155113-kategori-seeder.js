@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const addKategori = [
       {
-        nama : 'Komik & Novel Grafis',
+        nama : 'Fiksi',
         createdAt : new Date(),
         updatedAt : new Date()
       }

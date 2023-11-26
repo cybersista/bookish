@@ -8,6 +8,11 @@ module.exports = {
         nama : 'Eiichiro Oda',
         createdAt : new Date(),
         updatedAt : new Date()
+      },
+      {
+        nama : 'Tere Liye',
+        createdAt : new Date(),
+        updatedAt : new Date()
       }
     ]
     await queryInterface.bulkInsert('Penulis', addPenulis, {

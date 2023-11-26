@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { registerAdmin, login, getAllAdmins, getAdminById} = require('../controllers/user');
+const { register, login, getAllAdmins, getAdminById} = require('../controllers/user');
 const { authentication } = require('../middlewares/auth');
 
 /**
@@ -56,7 +56,7 @@ const { authentication } = require('../middlewares/auth');
  *       500:
  *         description: Internal Server Error
  */
-router.post('/admins/register', registerAdmin);
+router.post('/admins/register', register);
 
 /**
  * @swagger

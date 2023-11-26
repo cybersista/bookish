@@ -10,6 +10,13 @@ module.exports = {
         levelUser : 'admin',
         createdAt : new Date(),
         updatedAt : new Date()
+      },
+      {
+        email : 'shellafebriana14@gmail.com',
+        password : 'shellafebriana14',
+        levelUser : 'member',
+        createdAt : new Date(),
+        updatedAt : new Date()
       }
     ]
     await queryInterface.bulkInsert('Users', addUser, {

@@ -2,17 +2,13 @@ const pool = require('../config/config.json')['development'];
 const { User } = require('../models');
 const { tokenSign } = require('../helpers/jwt');
 
-// Register Admin
-const registerAdmin = async (req, res, next) => {
+// Register
+const register = async (req, res, next) => {
   try {
     const { email, password, levelUser } = req.body;
 
-    if (!email || !password || !levelUser) {
+    if (!email || !password) {
       return res.status(400).json({ status: 400, message: 'Incomplete data. Please provide all required fields.' });
-    }
-
-    if (levelUser !== 'admin') {
-      return res.status(400).json({status: 400, message: 'Invalid levelUser for admin registration.' });
     }
 
     const newUser = await User.create({
@@ -21,9 +17,12 @@ const registerAdmin = async (req, res, next) => {
       levelUser,
     });
 
-    const adminId = newUser.id;
-    const token = tokenSign({ userId: adminId, isAdmin: true });
-
+    const userId = newUser.id;
+    if (levelUser == 'admin') {
+      const token = tokenSign({ userId: userId, isAdmin: true });
+    }else{
+      const token = tokenSign({ userId: memberId, isAdmin: false });
+    }
     res.status(201).json({status: 201, message: 'Registration successful', token });
   } catch (error) {
     next(error);
@@ -93,7 +92,7 @@ const getAdminById = async (req, res, next) => {
 };
 
 module.exports = {
-  registerAdmin,
+  register,
   login,
   getAllAdmins,
   getAdminById,

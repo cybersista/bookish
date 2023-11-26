@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Buku.hasMany(models.Gudang, {foreignKey : 'bukuId', as:'gudangs'})
       Buku.hasMany(models.fileBuku, {foreignKey : 'bukuId', as:'fileBukus'})
       Buku.hasMany(models.pesananItem, {foreignKey : 'bukuId', as:'pesananItems'})
-      Buku.hasMany(models.ulasanBuku, {foreignKey : 'bukuId', as:'ulasanBukus'})
+      Buku.hasMany(models.ulasanBuku, {foreignKey : 'bukuId'})
       Buku.hasMany(models.shopping_session, {foreignKey : 'bukuId', as:'shopping_sessions'})
     }
   }

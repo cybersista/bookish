@@ -8,6 +8,11 @@ module.exports = {
         nama : 'Elex Media Komputindo',
         createdAt : new Date(),
         updatedAt : new Date()
+      },
+      {
+        nama : 'Sabak Grip Nusantara',
+        createdAt : new Date(),
+        updatedAt : new Date()
       }
     ]
     await queryInterface.bulkInsert('Penerbits', addPenerbit, {
