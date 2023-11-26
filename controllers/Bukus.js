@@ -1,4 +1,5 @@
 const {Buku, Kategori, ulasanBuku, sequelize} = require('../models');
+const {Op} = require('sequelize');
 
 // Fungsi untuk menampilkan semua Buku
 const getAllBuku = async (req, res) => {
@@ -76,6 +77,10 @@ const getBukuByKategori = async (req, res, next) => {
   try {
     const nama = req.params.nama;
 
+    // Log the category names from the database
+    const categoriesFromDatabase = await Kategori.findAll();
+    console.log('Categories from Database:', categoriesFromDatabase.map(category => category.nama));
+
     const booksByCategory = await Buku.findAll({
       include: [
         {
@@ -86,11 +91,15 @@ const getBukuByKategori = async (req, res, next) => {
           },
         },
       ],
+      logging: console.log, 
     });
+
+    console.log('Books by Category:', booksByCategory);
 
     if (booksByCategory.length === 0) {
       return res.status(404).json({ status: 404, error: 'Buku not found for the specified category' });
     }
+
     res.status(200).json({ status: 200, message: 'Success', data: booksByCategory });
   } catch (error) {
     console.error(error);
@@ -107,12 +116,16 @@ const getBukuPopuler = async (req, res) => {
         {
           model: ulasanBuku,
           as: 'ulasanBukus',
+          where: sequelize.literal('"ulasanBukus"."rating" IS NOT NULL'), // Hanya ambil buku yang memiliki ulasan (rating tidak null)
         },
       ],
       order: [
-        [sequelize.literal('(SELECT AVG("ulasanBukus"."rating") FROM "ulasanBukus" WHERE "ulasanBukus"."bukuId" = "Buku"."id")'), 'DESC'],
+        [
+          sequelize.literal('(SELECT MAX("ulasanBukus"."rating") FROM "ulasanBukus" WHERE "ulasanBukus"."bukuId" = "Buku"."id")'),
+          'DESC',
+        ],
       ],
-      limit: 30, // Ambil 10 buku terpopuler
+      limit: 30, // Ambil 30 buku terpopuler
     });
 
     res.status(200).json({ status: 200, message: 'Success', data: popularBooks });

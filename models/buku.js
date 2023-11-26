@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     penulisId: DataTypes.INTEGER,
     penerbitId: DataTypes.INTEGER,
     kategoriId: DataTypes.INTEGER,
-    judul: DataTypes.INTEGER,
+    judul: DataTypes.STRING,
     harga: DataTypes.DECIMAL(10,2),
     isbn: DataTypes.CHAR(13),
     tahunTerbit: DataTypes.CHAR(4)

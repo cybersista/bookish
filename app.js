@@ -36,7 +36,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.1.9',
     info: {
-      title: 'API Admin',
+      title: 'API Dashboard & API Regist-Login Admin',
       version: '1.0.0',
       description: 'Informasi API Admin',
       servers: ['http://localhost:3000'],
