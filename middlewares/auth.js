@@ -9,11 +9,11 @@ const authentication = (req, res, next) => {
 
   try {
     const decoded = tokenVerifier(token);
-    const { isAdmin } = decoded;
+    // const { isAdmin } = decoded;
 
-    if (!isAdmin) {
-      return res.status(403).json({ status:403, message: 'Unauthorized access! Admin access required.' });
-    }
+    // if (!isAdmin) {
+    //   return res.status(403).json({ status:403, message: 'Unauthorized access! Admin access required.' });
+    // }
 
     req.user = decoded;
     next();

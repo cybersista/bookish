@@ -121,7 +121,7 @@ const getBukuPopuler = async (req, res) => {
       ],
       order: [
         [
-          sequelize.literal('(SELECT MAX("ulasanBukus"."rating") FROM "ulasanBukus" WHERE "ulasanBukus"."bukuId" = "Buku"."id")'),
+          sequelize.literal('(SELECT AVG("ulasanBukus"."rating") FROM "ulasanBukus" WHERE "ulasanBukus"."bukuId" = "Buku"."id")'),
           'DESC',
         ],
       ],
