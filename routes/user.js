@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { register, login, getAllAdmins, getAdminById} = require('../controllers/user');
-const { authentication } = require('../middlewares/auth');
+const express           = require('express');
+const router            = express.Router();
+const { userController, detailUserController} = require('../controllers');
+const { authentication,verifyRole }= require('../middlewares/auth');
+const roleList  = require('../config/role')
 
 /**
  * @swagger
@@ -56,7 +57,7 @@ const { authentication } = require('../middlewares/auth');
  *       500:
  *         description: Internal Server Error
  */
-router.post('/admins/register', register);
+router.post('/add', authentication, verifyRole(roleList.Admin),userController.createUser);
 
 /**
  * @swagger
@@ -77,7 +78,7 @@ router.post('/admins/register', register);
  *       500:
  *         description: Internal Server Error!
  */
-router.post('/login', login);
+// router.post('/login', login);
 
 /**
  * @swagger
@@ -99,8 +100,9 @@ router.post('/login', login);
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/admins', authentication, getAllAdmins);
+router.get('/', authentication, verifyRole(roleList.Admin), userController.getAll);
 
+router.get('/detail',  authentication, verifyRole(roleList.Member),detailUserController.getAll);
 /**
  * @swagger
  * /user/admins/{id}:
@@ -130,6 +132,9 @@ router.get('/admins', authentication, getAllAdmins);
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/admins/:id', authentication, getAdminById);
+router.get('/:id',  authentication, verifyRole(roleList.Admin), userController.getUserById);
+router.put('/edit/:id',  authentication, verifyRole(roleList.Admin), userController.updateUser);
+router.delete('/delete/:id',  authentication, verifyRole(roleList.Admin), userController.deleteUser);
+
 
 module.exports = router;

@@ -1,88 +1,29 @@
-const pool = require('../config/config.json')['development'];
 const { User } = require('../models');
-const { tokenSign } = require('../helpers/jwt');
-
-// Register
-const register = async (req, res, next) => {
-  try {
-    const { email, password, levelUser } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ status: 400, message: 'Incomplete data. Please provide all required fields.' });
-    }
-
-    const newUser = await User.create({
-      email,
-      password,
-      levelUser,
-    });
-
-    const userId = newUser.id;
-    if (levelUser == 'admin') {
-      token = tokenSign({ userId: userId, isAdmin: true });
-    }else{
-      token = tokenSign({ userId: userId, isAdmin: false });
-    }
-    res.status(201).json({status: 201, message: 'Registration successful', token });
-  } catch (error) {
-    next(error);
-  }
-};
-
-// Login
-const login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    const result = await User.findOne({
-      where: {
-        email,
-        password,
-      },
-    });
-
-    if (result) {
-      const userId = result.id;
-      const isAdmin = result.levelUser === 'admin';
-      const token = tokenSign({ userId, isAdmin });
-      res.status(200).json({ status:200, message:'Login successful', token });
-    } else {
-      res.status(401).json({ status:401, message: 'Invalid email or password' });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
 
 // Get All Admins (only accessible by admin)
-const getAllAdmins = async (req, res, next) => {
+const getAll = async (req, res, next) => {
   try {
-    const result = await User.findAll({
-      where: {
-        levelUser: 'admin',
-      },
-    });
+    const result = await User.findAll();
 
-    res.status(200).json({status:200, message:'Success Get Admins', data:result});
+    res.status(200).json({status:200, message:'Success Get All User', data:result});
   } catch (error) {
     next(error);
   }
 };
 
 // Get Admin by ID (only accessible by admin)
-const getAdminById = async (req, res, next) => {
-  const adminId = req.params.id;
+const getUserById = async (req, res, next) => {
+  const userId = req.params.id;
 
   try {
     const result = await User.findOne({
       where: {
-        id: adminId,
-        levelUser: 'admin',
+        id: userId,
       },
     });
 
     if (result) {
-      res.status(200).json({status:200, message:`Success Get Admin With Id: ${adminId}`, data:result});
+      res.status(200).json({status:200, message:`Success Get User With Id: ${userId}`, data:result});
     } else {
       res.status(404).json({ status:404, message: 'Admin not found' });
     }
@@ -91,9 +32,53 @@ const getAdminById = async (req, res, next) => {
   }
 };
 
+const createUser = async (req, res) => {
+  const { email, password } = req.body;
+  const levelUser = 'admin'
+  try {
+    const newUser = await User.create({ email, password, levelUser });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+  }
+};
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { email, password } = req.body;
+  const updatedAt = new Date()
+  try {
+    const UsersToUpdate = await User.findByPk(id);
+    if (!UsersToUpdate) {
+      return res.status(404).json({ status: 404, error: 'Users not found' });
+    }
+    await UsersToUpdate.update({ email, password, updatedAt });
+    res.json(UsersToUpdate);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userToDelete = await User.findByPk(id);
+    if (!userToDelete) {
+      return res.status(404).json({ status: 404, error: 'User not found' });
+    }
+    await userToDelete.destroy();
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 500, error: 'Internal Server Error' });
+  }
+};
 module.exports = {
-  register,
-  login,
-  getAllAdmins,
-  getAdminById,
+  getAll,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser
 };
