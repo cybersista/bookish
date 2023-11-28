@@ -10,7 +10,7 @@ const bukuRoute = require('./buku')
 const shopRoute = require('./shop')
 const categoryRoute = require('./kategori')
 const writerRoute = require('./penulis')
-const publisherRoute = require('./publisher')
+const publisherRoute = require('./penerbit')
 
 // route untuk user dan member
 router.get('/', dashboardController.dashboardUser)
