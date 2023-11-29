@@ -28,7 +28,7 @@ app.use(upload.single('urlFile'));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.set('views', path.join(__dirname,'public/views/'))
+app.set('views', path.join(__dirname,'public/'))
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
 
