@@ -1,13 +1,13 @@
-import { instance } from '../../axios/index.js';
+import { instance } from '../../axios/index';
 
-const registerAdmin = async (userData) => {
-  try {
-    const response = await instance.post('/user/admins/register', userData);
-    return response.data;
-  } catch (error) {
-    throw error.response.data;
-  }
-};
+// const registerAdmin = async (userData) => {
+//   try {
+//     const response = await instance.post('/user/admins/register', userData);
+//     return response.data;
+//   } catch (error) {
+//     throw error.response.data;
+//   }
+// };
 
 const registerMember = async (userData) => {
   try {
@@ -21,10 +21,11 @@ const registerMember = async (userData) => {
 const login = async (email, password) => {
   try {
     const response = await instance.post('/user/login', { email, password });
+    console.log("Login Response:", response.data);
     return response.data;
   } catch (error) {
-    return error.response.data;
+    throw error.response.data;
   }
 };
 
-export { registerAdmin, registerMember, login };
+export {registerMember, login };

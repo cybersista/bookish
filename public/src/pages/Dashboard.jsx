@@ -1,40 +1,43 @@
-// import Navbar from "../components/Navbar.jsx";
-// // import Sidebar from "../components/Sidebar.jsx";
-// // import KanbanTable from "../components/KanbanTable.jsx";
-
 // const Dashboard = () => {
-//     return (
-//         <>
-//             <Navbar/>
-//             <div className="p-5 sm:p-10 sm:ml-64 mt-16 sm:mt-16">
-//                 <div className="flex items-center justify-between mb-4">
-//                     <h1 className="text-3xl font-semibold font-poppins">Dashboard</h1>
-//                 </div>
-//                 <div className="flex items-center flex-col sm:flex-row justify-center gap-5 mt-10">
-//                     <div className="w-full p-5 bg-[#C6D984] hover:bg-[#014034] text-white rounded-xl">
-//                         <h1 className="text-2xl font-semibold font-poppins">99</h1>
-//                         <h2 className="text-sm font-medium font-poppins">Job List</h2>
-//                     </div>
-//                     <div className="w-full p-5 bg-[#F2CD5C] hover:bg-[#014034] text-white rounded-xl">
-//                         <h1 className="text-2xl font-semibold font-poppins">10</h1>
-//                         <h2 className="text-sm font-medium font-poppins">Applicant</h2>
-//                     </div>
-//                     <div className="w-full p-5 bg-[#F24C3D] hover:bg-[#014034] text-white rounded-xl">
-//                         <h1 className="text-2xl font-semibold font-poppins">3</h1>
-//                         <h2 className="text-sm font-medium font-poppins">Applicant Pending</h2>
-//                     </div>
-//                 </div>
-//             </div>
+//   return (
+//     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+//       <a href="#">
+//         <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+//       </a>
+//       <div className="p-5">
+//         <a href="#">
+//           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+//             Noteworthy technology acquisitions 2021
+//           </h5>
+//         </a>
+//         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+//           Here are the biggest enterprise technology acquisitions of 2021 so
+//           far, in reverse chronological order.
+//         </p>
+//         <a
+//           href="#"
+//           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+//         >
+//           Read more
+//           <svg
+//             className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+//             aria-hidden="true"
+//             xmlns="http://www.w3.org/2000/svg"
+//             fill="none"
+//             viewBox="0 0 14 10"
+//           >
+//             <path
+//               stroke="currentColor"
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               strokeWidth="2"
+//               d="M1 5h12m0 0L9 1m4 4L9 9"
+//             />
+//           </svg>
+//         </a>
+//       </div>
+//     </div>
+//   );
+// };
 
-//             <div className="p-5 sm:p-10 sm:ml-64">
-//                 <div className="flex items-center justify-between mb-4">
-//                     <h1 className="text-lg font-semibold font-poppins">Application Pending</h1>
-//                 </div>
-//                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-//                 </div>
-//             </div>
-//         </>
-//     )
-// }
-
-// export default Dashboard
+// export default Dashboard;

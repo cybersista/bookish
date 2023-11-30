@@ -15,6 +15,7 @@ const port           = process.env.PORT || 3000
 const morgan         = require('morgan');
 const swaggerJsDoc   = require('swagger-jsdoc');
 const swaggerUI      = require('swagger-ui-express');
+const routes         = require("./routes/index")
 
 const corsOptions = {
   origin: 'http://localhost:3001',
@@ -54,7 +55,7 @@ const swaggerOptions = {
   apis: ['./routes/*.js'],
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use('/api-docs', routes, swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use(morgan('common'));
 
 app.use('/', route)
@@ -63,6 +64,6 @@ app.use('/', route)
 
 if (process.env.APP_ENV != 'test') {
     app.listen(port, () => {
-        console.log(`Listening on http://localhost:${port}`)
+        console.log(`Listening on http://localhost:${port}/api-docs`)
     })
 }

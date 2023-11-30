@@ -70,8 +70,8 @@ const login = async (req, res, next) => {
     if (result) {
       const userId = result.id;
       const isAdmin = result.levelUser === 'admin';
-      const token = tokenSign({ userId, isAdmin, levelUser: result.levelUser});
-      res.status(200).json({ status:200, message:'Login successful', token });
+      const token = tokenSign({ userId, isAdmin });
+      res.status(200).json({ status:200, message:'Login successful', token, levelUser: result.levelUser });
     } else {
       res.status(401).json({ status:401, message: 'Invalid email or password' });
     }
