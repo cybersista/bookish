@@ -1,7 +1,11 @@
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer"; // Perubahan di sini
-import Dashboard from "./pages/Dashboard";
+import Footer from "./components/Footer";
+// import Dashboard from "./pages/Dashboard";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import PrivacyPolicy from "./pages/PrivacyPolice";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -9,7 +13,11 @@ function App() {
         <Router>
           <Navbar />
             <Routes>
-                <Route path={"/dashboard"} element={<Dashboard />} />
+                {/* <Route path={"/dashboard"} element={<Dashboard />} /> */}
+                <Route path={"/registrasi"} element={<Register />} />
+                <Route path={"/login"} element={<Login />} />
+                <Route path={"/privacy-policy"} element={<PrivacyPolicy />} />
+                <Route path={"/about-us"} element={<AboutUs />} />
             </Routes>
           <Footer /> 
         </Router>
