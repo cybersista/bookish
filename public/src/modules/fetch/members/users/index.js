@@ -1,4 +1,4 @@
-import { instance } from '../../axios/index';
+import { instance } from '../../../axios/index';
 
 // const registerAdmin = async (userData) => {
 //   try {

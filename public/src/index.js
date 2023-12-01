@@ -1,10 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import React from 'react';
+// import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+import AppAdmin from './Admins.jsx';
+import AppUsers from './Members.jsx';
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const isAdmin = false; // Ganti dengan logika penentuan admin atau user
+
+const rootElement = document.getElementById('root');
+
+createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    {isAdmin ? <AppAdmin /> : <AppUsers />}
+  </React.StrictMode>
+);

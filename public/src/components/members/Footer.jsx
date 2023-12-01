@@ -4,7 +4,7 @@ const Footer = () => {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
+            <a href="/users/about-us" className="flex items-center">
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 Bookish.co
               </span>
@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="md:ml-20 grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-6 w-full md:w-auto">
             <div className="text-gray-500 dark:text-gray-400 font-medium">
               <h2 className="mb-2 text-lg font-bold text-white uppercase dark:text-white">
-              <a href="/about-us">About Us</a>
+              <a href="/users/about-us">About Us</a>
               </h2>
               <p className="text-sm text-[#FDF9EC] font-normal">
                 Platform dengan menyajikan Dunia Literasi dengan Pilihan Buku Terbaik
@@ -83,7 +83,7 @@ const Footer = () => {
               <ul className="text-sm text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-2">
                   <a
-                    href="/privacy-policy"
+                    href="/users/about-us"
                     className="hover:underline text-[#FDF9EC] font-normal"
                   >
                     Privacy Policy

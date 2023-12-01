@@ -1,86 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { login } from "../modules/fetch/users";
+import { login } from "../../modules/fetch/admins/users";
 
-const Login = () => {
+const LoginAdmins = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  
-  //   if (token) {
-  //     try {
-  //       const data = jwtDecode(token);
-  //       const levelUser = data.levelUser
-  
-  //       if (levelUser === "admin") {
-  //         navigate("/kategori");
-  //       } else {
-  //         navigate("/kategori");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error decoding token:", error);
-  //       localStorage.removeItem("token");
-  //       console.log(error);
-  //     }
-  //   }
-  // }, [navigate]);
-
-  // // const handleLogin = async (e) => {
-  // //   e.preventDefault();
-  // //   try {
-  // //     const data = await login(email, password);
-  // //     console.log("Login Data:", data);
-
-  // //     // Assuming the user role is available in the data received
-  // //     const levelUser = data.levelUser;
-  // //     console.log("Level User:", levelUser);
-
-  // //     localStorage.setItem("token", data.token);
-
-  // //     // Redirect based on user role
-  // //     if (levelUser === "admin") {
-  // //       navigate("/kategori");
-  // //     } else {
-  // //       navigate("/dashboard");
-  // //     }
-  // //   } catch (error) {
-  // //     console.error("Login Error:", error);
-  // //     setError("Invalid email or password. Please try again.");
-  // //   }
-  // // };
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = await login(email, password);
-  //     console.log("Data Login:", data);
-  
-  //     // Periksa payload token
-  //     const decodedToken = jwtDecode(data.token);
-  //     console.log("Decoded Token:", decodedToken);
-  
-  //     // Ekstrak peran pengguna dari token
-  //     const levelUser = decodedToken.levelUser;
-  //     console.log("Level User:", levelUser);
-  
-  //     localStorage.setItem("token", data.token);
-  
-  //     // Redirect berdasarkan peran pengguna
-  //     if (data.isAdmin) {
-  //       navigate("/kategori");
-  //     } else {
-  //       navigate("/kategori");
-  //     }
-  //   } catch (error) {
-  //     console.error("Kesalahan Login:", error);
-  //     setError("Email atau kata sandi tidak valid. Silakan coba lagi.");
-  //   }
-  // };
   
     useEffect(() => {
       const token = localStorage.getItem('token');
@@ -93,9 +20,9 @@ const Login = () => {
           const levelUser = data.isAdmin ? 'admin' : 'member';
       
           if (levelUser === 'admin') {
-            navigate('/kategori');
+            navigate('/admins/dashboard');
           } else if (levelUser === 'member') {
-            navigate('/dashboard');
+            navigate('/users/dashboard');
           }
         } catch (error) {
           console.error('Error decoding token:', error);
@@ -118,11 +45,9 @@ const Login = () => {
     
         // Redirect based on user role
         if (levelUser === 'admin') {
-          navigate('/kategori');
-          console.log('Redirecting to /kategori');
+          navigate('/admins/dashboard');
         } else if (levelUser === 'member') {
-          console.log('Redirecting to /dashboard');
-          navigate('/dashboard');
+          navigate('/users/admins');
         }
     
       } catch (error) {
@@ -134,7 +59,7 @@ const Login = () => {
 
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDF9EC] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-2">
         <div className="mb-4">
           <h2 className="text-center text-3xl font-extrabold text-gray-900">
@@ -184,7 +109,7 @@ const Login = () => {
           <div>
           <button
             type="submit"
-            className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#677C52] hover:bg-[#8FA778] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#858585] hover:bg-[#BBAFAF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Sign in
           </button>
@@ -193,7 +118,7 @@ const Login = () => {
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
           Don&apos;t have an account?{' '}
-          <Link to="/registrasi" className="font-medium text-[#EA2020] hover:text-indigo-500">
+          <Link to="/admins/registrasi" className="font-medium text-[#EA2020] hover:text-indigo-500">
             Register here
           </Link>
         </p>
@@ -203,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginAdmins;

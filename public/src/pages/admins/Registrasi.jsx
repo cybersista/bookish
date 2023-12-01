@@ -1,27 +1,28 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerMember } from '../modules/fetch/users';
+import { registerAdmin } from '../../modules/fetch/admins/users';
 
-const Register = () => {
+const RegisterAdminPages = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [levelUser, setlevelUser] = useState('');
   const [error, setError] = useState('');
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      await registerMember({ email, password });
+      await registerAdmin({ email, password, levelUser });
       // Redirect to login page after successful registration
-      navigate('/login');
+      navigate('/admins/login');
     } catch (error) {
       setError('Registration failed. Please try again.');
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDF9EC] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Register</h2>
@@ -40,7 +41,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@mail"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border border-black rounded-md"
             />
           </div>
           <div>
@@ -55,15 +56,31 @@ const Register = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border border-black rounded-md"
               placeholder="****"
+            />
+          </div>
+          <div>
+            <label htmlFor="levelUser" className="block text-sm font-medium text-gray-700">
+              Level User<span className="text-red-500">*</span>
+            </label>
+            <input
+              id="levelUser"
+              name="levelUser"
+              type="levelUser"
+              autoComplete="current-password"
+              required
+              value={levelUser}
+              onChange={(e) => setlevelUser(e.target.value)}
+              className="mt-1 p-2 w-full border border-black rounded-md"
+              placeholder= "admin"
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div>
             <button
               type="submit"
-              className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#677C52] hover:bg-[#8FA778] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#858585] hover:bg-[#BBAFAF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Sign Up
             </button>
@@ -74,4 +91,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterAdminPages;
