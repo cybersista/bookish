@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { registerMember, getAllMembers } = require('../controllers/user');
+const { registerMember, loginMember, getAllMembers, getMemberById } = require('../controllers/user');
 const { authentication } = require('../middlewares/auth');
 
 /**
  * @swagger
  * tags:
  *   name: Members
- *   description: Manajemen Members
+ *   description: Manajemen Member
  */
 
 /**
  * @swagger
- * /users/register:
+ * /user/members/register:
  *   post:
  *     summary: Registrasi member baru
  *     tags: [Members]
@@ -20,44 +20,127 @@ const { authentication } = require('../middlewares/auth');
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: integer
- *               nama:
- *                 type: string
- *               alamat:
- *                 type: string
- *               kodePos:
- *                 type: string
- *               telepon:
- *                 type: string
+ *             $ref: '#/components/schemas/Admin'
  *     responses:
  *       201:
- *         description: Registrasi member berhasil!
+ *         description: Registrasi Member berhasil!
+ *       400:
+ *         description: Email telah terdaftar atau ID sudah digunakan
  *       500:
  *         description: Internal Server Error
  */
-router.post('/register', registerMember);
+router.post('/members/register', registerMember);
 
 /**
  * @swagger
- * /users:
- *   get:
- *     summary: Mendapatkan semua members
+ * /user/members/login:
+ *   post:
+ *     summary: Login member
  *     tags: [Members]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MemberLogin'
  *     responses:
  *       200:
- *         description: Members berhasil diambil!
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/DetailUser'
+ *         description: Login member berhasil!
+ *       401:
+ *         description: Email atau password salah!
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/', authentication, getAllMembers);
+router.post('/members/login', loginMember);
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Member:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         levelUser:
+ *           type: string
+ *           example: member
+ *     MemberLogin:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *   securitySchemes:
+ *     MyAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * /user/members:
+ *   get:
+ *     summary: Get all members
+ *     tags: [Members]
+ *     security:
+ *       - MyAuth: []
+ *     responses:
+ *       200:
+ *         description: Member berhasil diambil!
+ *         content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/Admin'
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error!
+ */
+router.get('/members', authentication, getAllMembers);
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     MyAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * /user/members/{id}:
+ *   get:
+ *     summary: Get member by ID
+ *     tags: [Members]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Member ID
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - MyAuth: []
+ *     responses:
+ *       200:
+ *         description: Member berhasil diambil!
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Admin"
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Member not found
+ *       500:
+ *         description: Internal Server Error!
+ */
+router.get('/members/:id', authentication, getMemberById);
 
 module.exports = router;
