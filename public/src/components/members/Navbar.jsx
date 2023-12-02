@@ -72,7 +72,7 @@ const NavbarUsers = () => {
             </li>
             <li>
               <a
-                href="/users/kategori"
+                href="/users/kategori-buku"
                 className="text-white block py-2 px-3 rounded md:bg-transparent md:hover:text-black md:p-0 focus:bg-transparent focus:text-black active:bg-transparent active:text-black"
               >
                 Kategori
@@ -159,7 +159,7 @@ const NavbarUsers = () => {
               </button>
               {/* <!-- Dropdown menu --> */}
               {isAccountDropdownOpen && (
-                <div className="absolute right-0 mt-2 p-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 transform -translate-x-1/2 z-10" >
+                <div className="absolute right-0 mt-2 p-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 transform -translate-x-1/2 z-50" >
                   <ul
                     className="py-2 text-sm text-gray-700 dark:text-gray-400"
                     aria-labelledby="dropdownLargeButton"
@@ -182,7 +182,7 @@ const NavbarUsers = () => {
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="/users/detail-user"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Informasi Akun

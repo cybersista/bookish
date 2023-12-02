@@ -4,6 +4,7 @@ const path          = require('path')
 
 /** Inisialisasi disini router kalian */
 const userRoute = require('./user');
+const detailUserRoute = require('./detailUser');
 const bukuRoute = require('./Bukus');
 const fileBukuRoute = require('./fileBuku');
 const kategoriRoute = require('./Kategoris');
@@ -18,8 +19,10 @@ router.get('/', (req,res) => {
     })
 })
 router.use('/user', userRoute);
+// router.use('/my-account', userRoute)
+router.use('/detail-user', detailUserRoute);
 router.use('/buku', bukuRoute);
-router.use('/fileBuku', fileBukuRoute);
+router.use('/file-buku', fileBukuRoute);
 router.use('/kategori', kategoriRoute);
 router.use('/penerbit', penerbitRoute);
 router.use('/penulis', penulisRoute);

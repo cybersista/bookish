@@ -83,7 +83,7 @@ const Footer = () => {
               <ul className="text-sm text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-2">
                   <a
-                    href="/users/about-us"
+                    href="/users/privacy-policy"
                     className="hover:underline text-[#FDF9EC] font-normal"
                   >
                     Privacy Policy

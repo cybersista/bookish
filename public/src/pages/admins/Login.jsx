@@ -17,7 +17,7 @@ const LoginAdmins = () => {
           const data = jwtDecode(token);
           console.log('Decoded data from token:', data);
 
-          const levelUser = data.isAdmin ? 'admin' : 'member';
+          const levelUser = data.isUser ? 'admin' : 'member';
       
           if (levelUser === 'admin') {
             navigate('/admins/dashboard');

@@ -9,20 +9,35 @@ const authentication = (req, res, next) => {
 
   try {
     const decoded = tokenVerifier(token);
-    // const { isAdmin } = decoded;
+    const { isUser } = decoded;
 
-    // if (!isAdmin) {
-    //   return res.status(403).json({ status:403, message: 'Unauthorized access! Admin access required.' });
-    // }
-
-    req.user = decoded;
+    if (!isUser) {
+      return res.status(403).json({ status:403, message: 'Unauthorized access! Please register first.' });
+    }
+    req.user = decoded
     next();
+
   } catch (error) {
     console.error(error);
     res.status(401).json({ status: 401, message: 'Token salah!' });
   }
 };
 
+const verifyRole = function (rolesList = []) {
+  return (req, res, next) =>{
+    const role = req.user.isUser
+    const roleList = [rolesList]
+    console.log(role)
+    console.log(roleList);
+    const data = role == roleList ? true : false
+    if(data == false) {
+      res.sendStatus(401)
+    }
+    next()
+  }
+}
+
 module.exports = {
   authentication,
+  verifyRole
 };

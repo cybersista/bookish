@@ -1,25 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { addFileBuku, getAllFileBuku, updateFileBuku, deleteFileBuku, getFileBukuById } = require('../controllers/fileBuku');
-const { authentication } = require('../middlewares/auth');
-const upload = require('../middlewares/multer');
+const { createFileBuku, updateFileBuku, getAllFileBuku } = require('../controllers/fileBuku');
+const upload = require("../middlewares/multer");
 
 /**
  * @swagger
  * tags:
- *   name: fileBuku
+ *   name: File Buku
  *   description: Manajemen File Buku
  */
 
 /**
  * @swagger
- * /fileBuku:
+ * /file-buku:
  *   post:
- *     summary: Add a file to a book (admin only)
- *     tags: [fileBuku]
- *     security:
- *       - MyAuth: []
+ *     summary: Menambahkan file buku baru
+ *     tags: [File Buku]
  *     requestBody:
+ *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
@@ -29,76 +27,31 @@ const upload = require('../middlewares/multer');
  *                 type: integer
  *               urlFile:
  *                 type: string
- *                 format: binary
  *     responses:
  *       201:
- *         description: File added to book successfully
+ *         description: File buku berhasil ditambahkan
  *       400:
- *         description: Invalid data
- *       401:
- *         description: Unauthorized
+ *         description: Bad Request
  *       500:
  *         description: Internal Server Error
  */
-router.post('/', upload.single('urlFile'), authentication, addFileBuku);
-// router.post('/', upload.single('urlFile'), (req, res) => {
-//     console.log(req.file);
-//     res.send("file uploaded successfully");
-// });
+router.post('/', upload.single('urlFile'), createFileBuku);
 
 /**
  * @swagger
- * /fileBuku:
- *   get:
- *     summary: Get all files
- *     tags: [fileBuku]
- *     responses:
- *       200:
- *         description: Success
- *       500:
- *         description: Internal Server Error
- */
-router.get('/', getAllFileBuku);
-
-/**
- * @swagger
- * /fileBuku/{id}:
- *   get:
- *     summary: Get a file by ID
- *     tags: [fileBuku]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: File ID
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Success
- *       404:
- *         description: File not found
- *       500:
- *         description: Internal Server Error
- */
-router.get('/:id', getFileBukuById);
-
-/**
- * @swagger
- * /fileBuku/{id}:
+ * /file-buku/{id}:
  *   put:
- *     summary: Update a file by ID (admin only)
- *     tags: [fileBuku]
- *     security:
- *       - MyAuth: []
+ *     summary: Memperbarui file buku berdasarkan ID
+ *     tags: [File Buku]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: File ID
+ *         description: ID file buku
  *         schema:
  *           type: integer
  *     requestBody:
+ *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
@@ -108,40 +61,30 @@ router.get('/:id', getFileBukuById);
  *                 type: integer
  *               urlFile:
  *                 type: string
- *                 format: binary
  *     responses:
  *       200:
- *         description: File updated successfully
+ *         description: File buku berhasil diperbarui
+ *       400:
+ *         description: Bad Request
  *       404:
- *         description: File not found
+ *         description: File buku tidak ditemukan
  *       500:
  *         description: Internal Server Error
  */
-router.put('/:id',upload.single('urlFile'), authentication, updateFileBuku);
+router.put('/:id',upload.single('urlFile'), updateFileBuku);
 
 /**
  * @swagger
- * /fileBuku/{id}:
- *   delete:
- *     summary: Delete a file by ID (admin only)
- *     tags: [fileBuku]
- *     security:
- *       - MyAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: File ID
- *         schema:
- *           type: integer
+ * /file-buku/all:
+ *   get:
+ *     summary: Mendapatkan semua file buku
+ *     tags: [File Buku]
  *     responses:
  *       200:
- *         description: File deleted successfully
- *       404:
- *         description: File not found
+ *         description: File buku berhasil diambil
  *       500:
  *         description: Internal Server Error
  */
-router.delete('/:id', authentication, deleteFileBuku);
+router.get('/all', getAllFileBuku);
 
 module.exports = router;

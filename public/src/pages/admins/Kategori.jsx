@@ -1,20 +1,82 @@
-//MASIH CONTOH GAMBARAN, SESUAIKAN AJA ISI KATEGORINYA
+import { useState } from "react";
+import { getBukuByKategori } from "../../modules/fetch/admins/buku";
+import BukuCard from "../../components/admins/CardBuku";
 
-const KategoriAdmin = () => {
-    return (
-<form>   
-    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div className="relative">
-        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-        </div>
-        <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required style={{ zIndex: 1 }}></input>
-        <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" style={{ zIndex: 1 }}>Search</button>
-    </div>
+const KategoriBuku = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [error, setError] = useState("");
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = await getBukuByKategori(searchQuery);
+      setSearchResult(result.data);
+      setError("");
+    } catch (error) {
+      console.error("Error searching books by category:", error.message);
+      setError(
+        `Mohon Maaf, Buku Dengan Kategori ${searchQuery} Tidak Ditemukan!!!`
+      );
+      setSearchResult([]);
+    }
+  };
+
+  return (
+    <div className="min-h-screen p-4">
+ <form onSubmit={handleSearch} className="mt-4 flex items-center">
+  <input
+    type="search"
+    id="search-category"
+    className="flex-1 p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+    placeholder="Search your book with Category..."
+    required
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  ></input>
+  <button
+    type="submit"
+    className="p-2.5 z-20 text-sm font-medium h-full text-white bg-[#677C52] hover:bg-[#8FA778] focus:ring-4 focus:outline-none rounded-r-lg focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  >
+    <svg
+      className="w-4 h-4"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 20 20"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+      />
+    </svg>
+  </button>
 </form>
-    );
+
+      {error && (
+        <h2 className="m-4 text-2xl font-bold text-gray-900 dark:text-white">
+          {error}
+        </h2>
+      )}
+
+      {searchResult.length > 0 && (
+        <div>
+          <h2 className="m-4 text-2xl font-bold text-gray-900 dark:text-white">
+            Search Results For Product With Category {searchQuery}:
+          </h2>
+          <div className="ml-4 mr-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {searchResult.map((book) => (
+              <BukuCard key={book.id} book={book} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default KategoriAdmin;
+export default KategoriBuku;

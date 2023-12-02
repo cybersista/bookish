@@ -25,11 +25,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.use(bodyParser. text({type: '/'}));
-app.use(upload.single('urlFile'));
+// app.use(upload.single('urlFile'));
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-app.set('views', path.join(__dirname,'public/'))
+app.set('views', path.join(__dirname,'views'))
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
 

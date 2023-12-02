@@ -8,55 +8,64 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      
-      if (token) {
-        try {
-          const data = jwtDecode(token);
-          console.log('Decoded data from token:', data);
 
-          const levelUser = data.isAdmin ? 'admin' : 'member';
-      
-          if (levelUser === 'admin') {
-            navigate('/admins/dashboard');
-          } else if (levelUser === 'member') {
-            navigate('/users/dashboard');
-          }
-        } catch (error) {
-          console.error('Error decoding token:', error);
-          localStorage.removeItem('token');  
-        }
-      }
-    }, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-    const handleLogin = async (e) => {
-      e.preventDefault();
+    if (token) {
       try {
-        const data = await login(email, password);
-        console.log('Data from server:', data.token);
+        const data = jwtDecode(token);
+        console.log("Decoded data from token:", data);
 
-        // Assuming the user role is available in the data received
-        const levelUser = data.levelUser;
-        console.log('User role:', levelUser);
-    
-        localStorage.setItem('token', data.token);
-    
-        // Redirect based on user role
-        if (levelUser === 'admin') {
-          navigate('admins/dashboard');
-        } else if (levelUser === 'member') {
-          navigate('/users/dashboard');
+        const levelUser = data.isUser ? "admin" : "member";
+
+        if (levelUser === "admin") {
+          navigate("/admins/dashboard");
+        } else if (levelUser === "member") {
+          navigate("/users/dashboard");
         }
-    
       } catch (error) {
-        console.error('Login Error:', error);
-        console.log(error.response);
-        setError('Invalid email or password. Please try again.');
+        console.error("Error decoding token:", error);
+        localStorage.removeItem("token");
       }
-    };
+    }
+  }, [navigate]);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await login(email, password);
+      console.log("Data from server:", data.token);
+  
+      // Assuming the user role is available in the data received
+      const levelUser = data.levelUser;
+      console.log("User role:", levelUser);
+  
+      localStorage.setItem("token", data.token);
+  
+      const decodedToken = jwtDecode(data.token);
+      if (decodedToken && decodedToken.userId) {
+        const userId = decodedToken.userId;
+  
+        localStorage.setItem('userId', userId);
+  
+        // Redirect based on user role
+        if (levelUser === "admin") {
+          navigate("admins/dashboard");
+        } else if (levelUser === "member") {
+          navigate("/users/dashboard");
+        }
+      } else {
+        console.error('Error decoding user ID from token');
+        setError('Error decoding user ID from token');
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      console.log(error.response);
+      setError("Invalid email or password. Please try again.");
+    }
+  };
+  
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDF9EC] py-12 px-4 sm:px-6 lg:px-8">
@@ -107,24 +116,27 @@ const Login = () => {
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div>
-          <button
-            type="submit"
-            className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#677C52] hover:bg-[#8FA778] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Sign in
-          </button>
+            <button
+              type="submit"
+              className="group relative mx-auto flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#677C52] hover:bg-[#8FA778] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+        <div className="text-center mt-4">
+          <p className="text-sm text-gray-600">
+            Don&apos;t have an account?{" "}
+            <Link
+              to="/users/registrasi"
+              className="font-medium text-[#EA2020] hover:text-indigo-500"
+            >
+              Register here
+            </Link>
+          </p>
         </div>
-      </form>
-      <div className="text-center mt-4">
-        <p className="text-sm text-gray-600">
-          Don&apos;t have an account?{' '}
-          <Link to="/users/registrasi" className="font-medium text-[#EA2020] hover:text-indigo-500">
-            Register here
-          </Link>
-        </p>
       </div>
     </div>
-  </div>
   );
 };
 

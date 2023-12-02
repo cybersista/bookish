@@ -1,99 +1,76 @@
 const { fileBuku } = require('../models');
 
-// Add File to Book
-const addFileBuku = async (req, res, next) => {
-      try {
-          const { bukuId } = req.body;
-          const urlFile = req.file.path;
-
-          console.log('Request Body:', req.body);
-          console.log('File:', req.file);
-
-          const newFile = await fileBuku.create({
-              bukuId,
-              urlFile,
-          });
-
-          res.status(201).json({ status: 201, message: 'File added to book successfully', data: newFile });
-      } catch (error) {
-        console.error('Error:', error);
-          next(error);
-      }
-};
-
-// Get all files
-const getAllFileBuku = async (req, res, next) => {
+const createFileBuku = async (req, res) => {
   try {
-    const files = await fileBuku.findAll();
-    res.status(200).json({ status: 200, data: files });
-  } catch (error) {
-    next(error);
-  }
-};
+    const { bukuId } = req.body;
+const urlFile = req.file ? req.file.path : undefined;
 
-// Get file by ID
-const getFileBukuById = async (req, res, next) => {
-  const fileId = req.params.id;
-  try {
-    const file = await fileBuku.findByPk(fileId);
-    if (file) {
-      res.status(200).json({ status: 200, data: file });
-    } else {
-      res.status(404).json({ status: 404, message: 'File not found' });
+    // Pastikan bukuId dan urlFile tersedia
+    if (!bukuId || !urlFile) {
+      return res.status(400).json({ error: 'BukuId dan urlFile harus diisi' });
     }
+
+    // Buat file buku baru
+    const newFileBuku = await fileBuku.create({
+      bukuId,
+      urlFile,
+    });
+
+    return res.status(201).json(newFileBuku);
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-// Update file by ID
-const updateFileBuku = async (req, res, next) => {
-  const fileId = req.params.id;
-  const { bukuId } = req.body;
-  const urlFile = req.file ? req.file.path: null;
+const updateFileBuku = async (req, res) => {
   try {
-    const [updatedRows] = await fileBuku.update(req.body, {
-      where: {
-        id: fileId,
+    const { id } = req.params;
+    const { bukuId } = req.body;
+    const urlFile = req.file ? req.file.path : undefined;
+
+    // Pastikan id, bukuId, dan urlFile tersedia
+    if (!id || !bukuId || !urlFile) {
+      return res.status(400).json({ error: 'ID, bukuId, dan urlFile harus diisi' });
+    }
+
+    // Perbarui file buku berdasarkan id
+    const updatedFileBuku = await fileBuku.update(
+      {
         bukuId,
-        urlFile
+        urlFile,
       },
-    });
+      {
+        where: { id },
+      }
+    );
 
-    if (updatedRows) {
-      res.status(200).json({ status: 200, message: 'File updated successfully' });
-    } else {
-      res.status(404).json({ status: 404, message: 'File not found' });
+    // Periksa apakah file buku dengan id tersebut ditemukan
+    if (updatedFileBuku[0] === 0) {
+      return res.status(404).json({ error: 'File buku tidak ditemukan' });
     }
+
+    return res.status(200).json({ message: 'File buku berhasil diperbarui' });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-// Delete file by ID
-const deleteFileBuku = async (req, res, next) => {
-  const fileId = req.params.id;
+const getAllFileBuku = async (req, res) => {
   try {
-    const deletedFile = await fileBuku.destroy({
-      where: {
-        id: fileId,
-      },
-    });
+    // Ambil semua file buku dari database
+    const allFileBuku = await fileBuku.findAll();
 
-    if (deletedFile) {
-      res.status(200).json({ status: 200, message: 'File deleted successfully' });
-    } else {
-      res.status(404).json({ status: 404, message: 'File not found' });
-    }
+    return res.status(200).json(allFileBuku);
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 module.exports = {
-    addFileBuku,
-    getAllFileBuku,
-    getFileBukuById,
-    updateFileBuku,
-    deleteFileBuku,
+  createFileBuku,
+  updateFileBuku,
+  getAllFileBuku
 };
