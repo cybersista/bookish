@@ -1,11 +1,18 @@
-/*import { useState, useEffect } from 'react';
-//import { Link } from 'react-router-dom';
-import { getAllRiwayatPesanan } from '../../modules/fetch/admins/riwayatPesanan';
+import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { getAllRiwayatPesanan, updateStatusPesanan } from '../../modules/fetch/admins/riwayatPesanan';
 
 const ShopAdminPages = () => {
   const [riwayatPesanan, setRiwayatPesanan] = useState([]);
-
-  useEffect(() => { 
+  const [activeTab, setActiveTab] = useState('all'); // Default tab is 'all'
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  
+  useEffect(() => {
     fetchRiwayatPesanan();
   }, []);
 
@@ -19,146 +26,203 @@ const ShopAdminPages = () => {
     }
   };
 
-    return (
-       
-
-<div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div className="sm:hidden">
-        <label for="tabs" class="sr-only">Select tab</label>
-        <select id="tabs" class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option>Statistics</option>
-            <option>Services</option>
-            <option>FAQ</option>
-        </select>
-    </div>
-    <ul class="hidden text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400 rtl:divide-x-reverse" id="fullWidthTab" data-tabs-toggle="#fullWidthTabContent" role="tablist">
-        <li class="w-full">
-            <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-ss-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Statistics</button>
-        </li>
-        <li class="w-full">
-            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">Services</button>
-        </li>
-        <li class="w-full">
-            <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false" class="inline-block w-full p-4 rounded-se-lg bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600">FAQ</button>
-        </li>
-    </ul>
-    <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-            <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">73M+</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Developers</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">100M+</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Public repositories</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">1000s</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Open source projects</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">1B+</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Contributors</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">90+</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Top Forbes companies</dd>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                    <dt class="mb-2 text-3xl font-extrabold">4M+</dt>
-                    <dd class="text-gray-500 dark:text-gray-400">Organizations</dd>
-                </div>
-            </dl>
-        </div>
-        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel" aria-labelledby="about-tab">
-            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">We invest in the world’s potential</h2>
-          
-            <ul role="list" class="space-y-4 text-gray-500 dark:text-gray-400">
-                <li class="flex space-x-2 rtl:space-x-reverse items-center">
-                    <svg class="flex-shrink-0 w-3.5 h-3.5 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="leading-tight">Dynamic reports and dashboards</span>
-                </li>
-                <li class="flex space-x-2 rtl:space-x-reverse items-center">
-                    <svg class="flex-shrink-0 w-3.5 h-3.5 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="leading-tight">Templates for everyone</span>
-                </li>
-                <li class="flex space-x-2 rtl:space-x-reverse items-center">
-                    <svg class="flex-shrink-0 w-3.5 h-3.5 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="leading-tight">Development workflow</span>
-                </li>
-                <li class="flex space-x-2 rtl:space-x-reverse items-center">
-                    <svg class="flex-shrink-0 w-3.5 h-3.5 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="leading-tight">Limitless business automation</span>
-                </li>
-            </ul>
-        </div>
-        <div class="hidden p-4 bg-white rounded-lg dark:bg-gray-800" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-            <div id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-800 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
-                <h2 id="accordion-flush-heading-1">
-                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-1" aria-expanded="true" aria-controls="accordion-flush-body-1">
-                    <span>What is Flowbite?</span>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                    </button>
-                </h2>
-                <div id="accordion-flush-body-1" class="hidden" aria-labelledby="accordion-flush-heading-1">
-                    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p>
-                    <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p>
-                    </div>
-                </div>
-                <h2 id="accordion-flush-heading-2">
-                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-2" aria-expanded="false" aria-controls="accordion-flush-body-2">
-                    <span>Is there a Figma file available?</span>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                    </button>
-                </h2>
-                <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
-                    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
-                    <p class="text-gray-500 dark:text-gray-400">Check out the <a href="https://flowbite.com/figma/" class="text-blue-600 dark:text-blue-500 hover:underline">Figma design system</a> based on the utility classes from Tailwind CSS and components from Flowbite.</p>
-                    </div>
-                </div>
-                <h2 id="accordion-flush-heading-3">
-                    <button type="button" class="flex items-center justify-between w-full py-5 font-medium text-left rtl:text-right text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400" data-accordion-target="#accordion-flush-body-3" aria-expanded="false" aria-controls="accordion-flush-body-3">
-                    <span>What are the differences between Flowbite and Tailwind UI?</span>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                    </button>
-                </h2>
-                <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
-                    <div class="py-5 border-b border-gray-200 dark:border-gray-700">
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p>
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p>
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about these technologies:</p>
-                    <ul class="ps-5 text-gray-500 list-disc dark:text-gray-400">
-                        <li><a href="https://flowbite.com/pro/" class="text-blue-600 dark:text-blue-500 hover:underline">Flowbite Pro</a></li>
-                        <li><a href="https://tailwindui.com/" rel="nofollow" class="text-blue-600 dark:text-blue-500 hover:underline">Tailwind UI</a></li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    );
+  const filterOrdersByStatus = (status) => {
+    if (status === 'all') {
+      return riwayatPesanan;
+    } else {
+      return riwayatPesanan.filter(order => order.statusPesanan === status);
+    }
   };
 
-  
-  export default ShopAdminPages;
-*/
+  const sortOrdersByStatus = (status) => {
+    const sortedOrders = filterOrdersByStatus(status);
+    return sortedOrders.sort((a, b) => a.id - b.id);
+  };
+
+  const handleUpdateOrder = (orderId) => {
+    setSelectedOrderId(orderId);
+    setShowDropdown(true);
+  };
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+  };
+
+  const handleUpdateStatus = async () => {
+    if (selectedStatus && selectedOrderId) {
+      try {
+        // Call the API to update the order status
+        await updateStatusPesanan(selectedOrderId, selectedStatus);
+
+        // Reset values
+        setSelectedOrderId(null);
+        setSelectedStatus(null);
+        setShowDropdown(false);
+
+        // Refresh the order list
+        fetchRiwayatPesanan();
+      } catch (error) {
+        console.error('Error updating order status:', error);
+      }
+    }
+  };
+  return (
+    <div className="container mx-auto mt-10">
+      <h1 className="px-8 text-3xl font-semibold mb-6">Order Management</h1>
+      <ul className="px-8 flex mb-6">
+        <li
+          onClick={() => setActiveTab('all')}
+          className={`mr-4 cursor-pointer ${
+            activeTab === 'all' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          }`}
+        >
+          All
+        </li>
+        <li
+          onClick={() => setActiveTab('Baru')}
+          className={`mr-4 cursor-pointer ${
+            activeTab === 'Baru' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          }`}
+        >
+          Baru
+        </li>
+        <li
+          onClick={() => setActiveTab('Proses Packing')}
+          className={`mr-4 cursor-pointer ${
+            activeTab === 'Proses Packing' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          }`}
+        >
+          Proses Packing
+        </li>
+        <li
+          onClick={() => setActiveTab('Dikirim')}
+          className={`mr-4 cursor-pointer ${
+            activeTab === 'Dikirim' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          }`}
+        >
+          Dikirim
+        </li>
+       
+        <li
+          onClick={() => setActiveTab('Dibatalkan')}
+          className={`cursor-pointer ${
+            activeTab === 'Dibatalkan' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          }`}
+        >
+          Dibatalkan
+        </li>
+      </ul>
+      <div className="px-8 grid gap-6">
+        {sortOrdersByStatus(activeTab).map(order => (
+        <div key={order.id} className="bg-white p-6 rounded-md shadow-md "  >
+            <p className="text-gray-600 flex items-center">
+         <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden mr-2">
+          <FontAwesomeIcon icon={faUser} className="text-white" />
+         </div> {order.users && order.users.detailUsers && order.users.detailUsers[0].nama}
+         </p>
+         <hr className="my-2" />
+            <div  className=" grid grid-cols-1 md:grid-cols-3">
+            {/* Kolom 1: Gambar Buku dan Judul */}
+
+      <div className="col-span-1 ">
+        <div className="flex">
+          <img 
+            src="https://images.unsplash.com/photo-1701206886289-05bc76ff6071?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            alt={order.bookTitle} 
+            className="w-32 px-6 py-6 h-auto object-cover" 
+          />
+          <div className="ml-4">
+            {order.pesananItems.map((item) => (
+              <div key={item.id} className="mb-2">
+                <p className="text-gray-700 py-12 px-8 text-base">{item.bukus && item.bukus.judul}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
+      {/* Kolom 2: Jumlah Buku dan Total Belanja */}
+      <div className="col-span-1 py-12 px-8">
+        <div className="flex " >
+        x{order.pesananItems && order.pesananItems[0]?.jumlah}
+          <div className="ml-4">
+            Rp{order.total}
+          </div>
+        </div>
+      </div>
+      
+
+      {/* Kolom 3: Status Pesanan dan Tombol Update Pesanan */}
+      <div className="col-span-1 flex flex-col items-center">
+      <p className="mb-4 ">
+                <Link to={`${order.id}`} className="text-blue-500 text-sm font-bold">
+                Lihat Detail Pesanan
+                </Link>
+                    </p>
+  <div className="relative inline-block text-left">
+    <button
+      onClick={() => handleUpdateOrder(order.id)}
+      className={`py-2 px-4 rounded focus:outline-none focus:ring focus:border-blue-300 ${
+        order.statusPesanan === 'Dikirim' ? 'bg-blue-500 text-white' :
+        order.statusPesanan === 'Proses Packing' ? 'bg-yellow-400 text-black' :
+        order.statusPesanan === 'Terkirim' ? 'bg-green-500 text-white' :
+        order.statusPesanan === 'Dibatalkan' ? 'bg-red-500 text-white' :
+        'bg-blue-500 text-white' // Default color jika status tidak sesuai dengan yang diharapkan
+      }`}
+    >
+      <span className="mr-2">{order.statusPesanan}</span>
+      <FontAwesomeIcon icon={faEdit} className="text-white" />
+    </button>
+    {showDropdown && selectedOrderId === order.id && (
+      <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="py-1">
+          <button
+            onClick={() => handleStatusChange('Dikirim')}
+            className={`block px-4 py-2 text-sm ${
+              order.statusPesanan === 'Dikirim' ? 'text-white bg-blue-500 hover:bg-blue-600' : 'text-gray-700 hover:bg-gray-200 hover:text-gray-900'
+            }`}
+          >
+            Dikirim
+          </button>
+          <button
+            onClick={() => handleStatusChange('Proses Packing')}
+            className={`block px-4 py-2 text-sm ${
+              order.statusPesanan === 'Proses Packing' ? 'text-black bg-yellow-400 hover:bg-yellow-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+            }`}
+          >
+            Proses Packing
+          </button>
+          <button
+            onClick={() => handleStatusChange('Dibatalkan')}
+            className={`block px-4 py-2 text-sm ${
+              order.statusPesanan === 'Dibatalkan' ? 'text-white bg-red-500 hover:bg-red-600' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+            }`}
+          >
+            Dibatalkan
+          </button>
+        </div>
+        <button
+          onClick={handleUpdateStatus}
+          className={`block w-full text-left px-4 py-2 text-sm ${
+            order.statusPesanan === 'Dikirim' ? 'bg-blue-500 hover:bg-blue-600' :
+            order.statusPesanan === 'Proses Packing' ? 'bg-yellow-400 hover:bg-yellow-600' :
+            order.statusPesanan === 'Dibatalkan' ? 'bg-red-500 hover:bg-red-600' :
+            'bg-blue-500 hover:bg-blue-600' 
+          }`}
+        >
+          Save
+        </button>
+      </div>
+    )}
+  </div>
+</div>
+      </div>
+    </div>
+  ))}
+</div>
+    </div>
+    
+  );
+};
+
+export default ShopAdminPages;

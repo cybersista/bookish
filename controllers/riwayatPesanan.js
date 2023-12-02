@@ -151,7 +151,7 @@ const { detailPesanan, pesananItem, pesananPayment, Buku, User, detailUser, file
 exports.getAllRiwayatPesananMembers = async (req, res) => {
   try {
     
-    const userId = 1; 
+    const userId = 1; //req.user.id; <-- diganti ini
 
 
     const riwayatPesanan = await detailPesanan.findAll({
@@ -185,6 +185,11 @@ exports.getAllRiwayatPesananAdmin = async (req, res) => {
           include: [{ model: Buku, as: 'bukus', 
           include: [{ model: fileBuku, as: 'fileBukus' }],},],
          },
+         {
+          model: User,
+          as: 'users',
+          include: [{ model: detailUser, as: 'detailUsers' }],
+        },
         
     
       ],
