@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, detailUser } = require('../models');
 
 // Get All Admins (only accessible by admin)
 const getAll = async (req, res, next) => {
@@ -33,10 +33,13 @@ const getUserById = async (req, res, next) => {
 };
 
 const createUser = async (req, res) => {
-  const { email, password } = req.body;
-  const levelUser = 'admin'
+  const { email, password, levelUser } = req.body;
   try {
-    const newUser = await User.create({ email, password, levelUser });
+    const newUser = await User.create({ email, password, levelUser })
+    if (levelUser == 'member') {
+      const userId = newUser.id
+      detailUser.create({userId})
+    }
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error);

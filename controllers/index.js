@@ -6,6 +6,7 @@ const detailUserController   = require('./detailUser')
 const kategoriController    = require('./kategori')
 const penulisController     = require('./penulis')
 const penerbitController     = require('./penerbit')
+const userPaymentController     = require('./userPayment')
 
 module.exports = {
     authController,
@@ -15,5 +16,6 @@ module.exports = {
     kategoriController,
     penulisController,
     detailUserController,
-    penerbitController
+    penerbitController,
+    userPaymentController
 }

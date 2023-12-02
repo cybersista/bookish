@@ -8,9 +8,9 @@ const { authentication }= require('../middlewares/auth');
 const accountRoute = require('./user')
 const bukuRoute = require('./buku')
 const shopRoute = require('./shop')
-const categoryRoute = require('./kategori')
-const writerRoute = require('./penulis')
-const publisherRoute = require('./penerbit')
+const kategoriRoute = require('./kategori')
+const penulisRoute = require('./penulis')
+const penerbitRoute = require('./penerbit')
 
 // route untuk user dan member
 router.get('/', dashboardController.dashboardUser)
@@ -28,9 +28,9 @@ router.use('/my-account', accountRoute)
 
 // route untuk admin
 router.use('/admin/user', accountRoute)
-router.use('/admin/category', categoryRoute)
-router.use('/admin/writer', writerRoute)
-router.use('/admin/publisher',publisherRoute)
+router.use('/admin/category', kategoriRoute)
+router.use('/admin/writer', penulisRoute)
+router.use('/admin/publisher',penerbitRoute)
 // router.use('/buku')
 // router.use('/pesanan')
 // router.use('/retur')

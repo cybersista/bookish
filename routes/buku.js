@@ -1,5 +1,5 @@
 const express            = require('express')
-const bukuController     = require('../controllers/buku')
+const {bukuController}     = require('../controllers')
 const router             = express.Router()
 
 /**
@@ -34,7 +34,7 @@ const router             = express.Router()
  *           type: number
  *           format: char
  */
-
+// route.get('/', bukuController.getAll)
 /**
  * @swagger
  * /buku/{id}:
@@ -60,6 +60,6 @@ const router             = express.Router()
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/:id', bukuController.detailBuku)
+router.get('/detail-buku/:id', bukuController.detailBuku)
 
 module.exports = router

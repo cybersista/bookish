@@ -1,6 +1,6 @@
 const express           = require('express');
 const router            = express.Router();
-const { userController, detailUserController} = require('../controllers');
+const { userController, detailUserController, userPaymentController} = require('../controllers');
 const { authentication,verifyRole }= require('../middlewares/auth');
 const roleList  = require('../config/role')
 
@@ -58,7 +58,7 @@ const roleList  = require('../config/role')
  *         description: Internal Server Error
  */
 router.post('/add', authentication, verifyRole(roleList.Admin),userController.createUser);
-
+router.post('/detail/add-payment', authentication, verifyRole(roleList.Member), userPaymentController.createPayment)
 /**
  * @swagger
  * /user/login:
@@ -101,8 +101,8 @@ router.post('/add', authentication, verifyRole(roleList.Admin),userController.cr
  *         description: Internal Server Error!
  */
 router.get('/', authentication, verifyRole(roleList.Admin), userController.getAll);
-
 router.get('/detail',  authentication, verifyRole(roleList.Member),detailUserController.getAll);
+router.get('/detail/payment',  authentication, verifyRole(roleList.Member),userPaymentController.getAll);
 /**
  * @swagger
  * /user/admins/{id}:
@@ -134,7 +134,9 @@ router.get('/detail',  authentication, verifyRole(roleList.Member),detailUserCon
  */
 router.get('/:id',  authentication, verifyRole(roleList.Admin), userController.getUserById);
 router.put('/edit/:id',  authentication, verifyRole(roleList.Admin), userController.updateUser);
+router.put('/detail/edit', authentication, verifyRole(roleList.Member),detailUserController.updatedetailUser);
+router.put('/detail/edit-payment/:id', authentication, verifyRole(roleList.Member),userPaymentController.updatePayment);
 router.delete('/delete/:id',  authentication, verifyRole(roleList.Admin), userController.deleteUser);
-
+router.delete('/detail/delete-payment/:id', authentication, verifyRole(roleList.Member),userPaymentController.deletePayment);
 
 module.exports = router;
