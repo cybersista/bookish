@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-
-
+const route = require('./routes/index');
 
 const options = {
   definition: {
@@ -22,15 +22,13 @@ const specs = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve);
 app.get('/api-docs', swaggerUi.setup(specs));
 
-
-
-const riwayatPesananRoute = require('./routes/riwayatPesanan');
-
- 
+// Move these lines up, before your route handler
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/riwayat-pesanan', riwayatPesananRoute);
+app.use(cors());
 
+// This middleware should come after cors
+app.use('/', route);
 
 
 const PORT = process.env.PORT || 3000;

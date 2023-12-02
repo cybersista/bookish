@@ -57,9 +57,25 @@
 
 /**
  * @swagger
+ * /riwayat-pesanan-members:
+ *   get:
+ *     summary: Mendapatkan riwayat pesanan pengguna tertentu
+ *     tags: [Riwayat Pesanan]
+ *     responses:
+ *       200:
+ *         description: Sukses mendapatkan riwayat pesanan pengguna tertentu
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/DetailPesanan'
+ *       500:
+ *         description: Kesalahan server
+
  * /riwayat-pesanan:
  *   get:
- *     summary: Mendapatkan semua riwayat pesanan
+ *     summary: Mendapatkan semua riwayat pesanan (Admin)
  *     tags: [Riwayat Pesanan]
  *     responses:
  *       200:
@@ -72,8 +88,6 @@
  *                 $ref: '#/components/schemas/DetailPesanan'
  *       500:
  *         description: Kesalahan server
-
- 
 
  * /riwayat-pesanan/{id}:
  *   get:
@@ -126,22 +140,53 @@
  *         description: Detail pesanan tidak ditemukan
  *       500:
  *         description: Kesalahan server
-
- 
  */
 
 
 
 
 
-const { detailPesanan, pesananItem, pesananPayment } = require('../models');
+const { detailPesanan, pesananItem, pesananPayment, Buku, User, detailUser, fileBuku } = require('../models');
 
-exports.getAllRiwayatPesanan = async (req, res) => {
+exports.getAllRiwayatPesananMembers = async (req, res) => {
+  try {
+    
+    const userId = 1; 
+
+
+    const riwayatPesanan = await detailPesanan.findAll({
+      where: { userId: userId }, 
+      include: [
+        { 
+          model: pesananItem, 
+          as: 'pesananItems',
+          include: [{ 
+            model: Buku, 
+            as: 'bukus', 
+            include: [{ model: fileBuku, as: 'fileBukus' }],
+          }],
+        },
+      ],
+    });
+
+    res.json(riwayatPesanan);
+  } catch (error) {
+    res.status(500).json({ status: 500, message: error.message });
+  }
+};
+
+exports.getAllRiwayatPesananAdmin = async (req, res) => {
   try {
     const riwayatPesanan = await detailPesanan.findAll({
       include: [
-        { model: pesananItem, as: 'pesananItems' },
-        { model: pesananPayment, as: 'pesananPayments' },
+        { 
+          model: pesananItem, 
+          as: 'pesananItems',
+          include: [{ model: Buku, as: 'bukus', 
+          include: [{ model: fileBuku, as: 'fileBukus' }],},],
+         },
+        
+    
       ],
     });
     res.json(riwayatPesanan);
@@ -155,8 +200,16 @@ exports.getDetailPesananById = async (req, res) => {
   try {
     const riwayatPesanan = await detailPesanan.findByPk(req.params.id, {
       include: [
-        { model: pesananItem, as: 'pesananItems' },
+        { model: pesananItem, as: 'pesananItems', 
+        include: [{ model: Buku, as: 'bukus',
+        include: [{ model: fileBuku, as: 'fileBukus' }]}], },
         { model: pesananPayment, as: 'pesananPayments' },
+        {
+          model: User,
+          as: 'users',
+          include: [{ model: detailUser, as: 'detailUsers' }],
+        },
+        
       ],
     });
 
