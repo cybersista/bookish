@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getBukuTerbaru } from "../../modules/fetch/admins/buku";
-import BukuCard from "../../components/admins/CardBuku";
+import BukuCard from "../../components/admins/BookCard";
 
 const BukuRekomendasi = () => {
   const [rekomendasi, setRekomendasi] = useState([]);

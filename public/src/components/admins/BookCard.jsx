@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; 
 import { Link } from "react-router-dom";
 import { getAllPenulis } from "../../modules/fetch/admins/penulis";
 import { getAllFileBuku } from "../../modules/fetch/admins/fileBuku";
 
-const BukuCard = ({ book }) => {
+const BookCard = ({ book }) => {
   const [penulis, setPenulis] = useState({});
   const [fileBuku, setFileBuku] = useState({});
 
@@ -42,8 +42,8 @@ const BukuCard = ({ book }) => {
   }, [book.penulisId, book.id]);
 
   return (
-    <div className="border border-black p-4 rounded-md shadow">
-      <Link to={`/users/detail-buku/${book.id}`}>
+    <div className="bg-[#FDF9EC] border border-black p-4 rounded-md shadow">
+      <Link to={`/admins/detail-buku/${book.id}`}>
         <h2 className="text-xl font-bold mb-2 text-center">{book.judul}</h2>
         {fileBuku.urlFile && (
           <img
@@ -59,8 +59,8 @@ const BukuCard = ({ book }) => {
   );
 };
 
-// Define prop types for the component
-BukuCard.propTypes = {
+// Validasi PropTypes
+BookCard.propTypes = {
   book: PropTypes.shape({
     id: PropTypes.number.isRequired,
     cover: PropTypes.string.isRequired,
@@ -71,4 +71,4 @@ BukuCard.propTypes = {
   }).isRequired,
 };
 
-export default BukuCard;
+export default BookCard;

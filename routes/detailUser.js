@@ -25,8 +25,8 @@ const roleList  = require('../config/role')
  *       500:
  *         description: Internal Server Error!
  */
-// router.get('/', authentication, verifyRole(roleList.Admin), getAll);
-router.get('/',  authentication, verifyRole(roleList.Member), getAll);
+router.get('/', authentication, verifyRole(roleList.Admin), getAll);
+// router.get('/',  authentication, verifyRole(roleList.Member), getAll);
 // router.get('/detail/payment',  authentication, verifyRole(roleList.Member),userPaymentController.getAll);
 
 
@@ -56,7 +56,7 @@ router.get('/',  authentication, verifyRole(roleList.Member), getAll);
  *       500:
  *         description: Internal Server Error!
  */
-router.post('/create', authentication, verifyRole(roleList.Member), createDetailUser);
+// router.post('/create', authentication, verifyRole(roleList.Member), createDetailUser);
 router.post('/create', authentication, verifyRole(roleList.Admin), createDetailUser);
 
 /**

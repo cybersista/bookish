@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllDetailUsers, createDetailUser, updateDetailUser } from "../../modules/fetch/admins/detailUser";
 
 const UpdateDetailUserForm = () => {
@@ -66,7 +66,7 @@ const UpdateDetailUserForm = () => {
         console.log("User details created:", createdUser);
       }
 
-      navigate("/users/detail-user");
+      navigate("/admins/detail-user");
     } catch (error) {
       console.error("Error updating/creating user details:", error.message);
     }
@@ -134,7 +134,9 @@ const UpdateDetailUserForm = () => {
             onClick={handleUpdateUser}
             className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
           >
+            <Link to="/admins/detail-user">
             Update
+            </Link>
           </button>
         </form>
       </div>

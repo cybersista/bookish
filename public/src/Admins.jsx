@@ -21,7 +21,7 @@ function AppAdmin() {
                 <Route path={"admins/registrasi"} element={<RegisterAdminPages />} />
                 <Route path={"admins/buku-populer"} element={<BukuPopuler />} />
                 <Route path={"admins/buku-rekomendasi"} element={<BukuRekomendasi />} />
-                <Route path={"admins/detail-buku"} element={<DetailBuku />} />
+                <Route path={"admins/detail-buku/:id"} element={<DetailBuku />} />
                 <Route path={"admins/detail-user"} element={<DetailUser />} />
                 <Route path={"admins/form-akun"} element={<UpdateDetailUserForm />} />
                 <Route path={"admins/login"} element={<LoginAdmins />} />

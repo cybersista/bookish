@@ -78,7 +78,7 @@ const DetailBuku = () => {
           </div>
           <div className="flex justify-center mt-4">
             <button className="bg-[#677C52] text-white p-2 rounded ml-4">
-             <Link to="/users/shop">
+             <Link to="/">
               Buy Now
               </Link>
             </button>

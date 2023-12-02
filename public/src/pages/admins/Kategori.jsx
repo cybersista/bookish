@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getBukuByKategori } from "../../modules/fetch/admins/buku";
-import BukuCard from "../../components/admins/CardBuku";
+import BukuCard from "../../components/admins/BookCard";
 
 const KategoriBuku = () => {
   const [searchQuery, setSearchQuery] = useState("");

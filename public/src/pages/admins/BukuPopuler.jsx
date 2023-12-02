@@ -1,7 +1,7 @@
 // pages/BukuPopuler.js
 import { useEffect, useState } from "react";
 import { getBukuPopuler } from "../../modules/fetch/admins/buku";
-import BukuCard from "../../components/admins/CardBuku";
+import BukuCard from "../../components/admins/BookCard";
 
 const BukuPopuler = () => {
   const [populer, setPopuler] = useState([]);
