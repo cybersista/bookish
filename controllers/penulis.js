@@ -38,13 +38,12 @@ const createPenulis = async (req, res) => {
 const updatePenulis = async (req, res) => {
   const { id } = req.params;
   const { nama } = req.body;
-  const updatedAt = new Date()
   try {
     const penulisToUpdate = await Penulis.findByPk(id);
     if (!penulisToUpdate) {
       return res.status(404).json({ status: 404, error: 'Penulis not found' });
     }
-    await penulisToUpdate.update({ nama, updatedAt });
+    await penulisToUpdate.update({ nama });
     res.json(penulisToUpdate);
   } catch (error) {
     console.error(error);
