@@ -2,7 +2,8 @@ const express       = require('express')
 const router        = express.Router()
 const path          = require('path')
 const {dashboardController, authController} = require('../controllers')
-const { authentication }= require('../middlewares/auth');
+const { authentication, verifyRole }= require('../middlewares/auth');
+const roleList  = require('../config/role')
 
 /** Inisialisasi disini router kalian */
 const accountRoute = require('./user')
@@ -27,11 +28,11 @@ router.use('/shop', shopRoute)
 router.use('/my-account', accountRoute)
 
 // route untuk admin
-router.use('/admin/user', accountRoute)
-router.use('/admin/category', kategoriRoute)
-router.use('/admin/writer', penulisRoute)
-router.use('/admin/publisher',penerbitRoute)
-// router.use('/buku')
+router.use('/admin/user', authentication, verifyRole(roleList.Admin), accountRoute)
+router.use('/admin/category', authentication, verifyRole(roleList.Admin), kategoriRoute)
+router.use('/admin/writer', authentication, verifyRole(roleList.Admin), penulisRoute)
+router.use('/admin/publisher', authentication, verifyRole(roleList.Admin), penerbitRoute)
+router.use('/admin/books', authentication, verifyRole(roleList.Admin), bukuRoute)
 // router.use('/pesanan')
 // router.use('/retur')
 // router.use('/event')

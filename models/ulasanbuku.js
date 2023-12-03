@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       ulasanBuku.belongsTo(models.User, {as : 'users', foreignKey : 'userId'})
 
       ulasanBuku.hasMany(models.fileUlasanBuku, {foreignKey : 'ulasanBukuId', as:'fileUlasanBukus'})
+      ulasanBuku.hasMany(models.komentarUlasanBuku, {foreignKey : 'ulasanBukuId', as:'komentarUlasanBukus'})
     }
   }
   ulasanBuku.init({

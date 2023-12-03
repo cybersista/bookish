@@ -24,7 +24,6 @@ const roleList = require('../config/role')
  *         description: Kesalahan Server Internal
  */
 router.get('/',  authentication, verifyRole(roleList.Admin), kategoriController.getAllKategoris);
-
 /**
  * @swagger
  * /kategori/{id}:

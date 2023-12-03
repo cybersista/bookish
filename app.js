@@ -5,6 +5,7 @@ const expressLayouts = require('express-ejs-layouts')
 const ejs            = require('ejs')
 const route          = require('./routes/index')
 const errorHandler   = require('./middlewares/error-handler')
+const upload         = require('./middlewares/multer');
 const cors           = require('cors')
 const bodyParser     = require('body-parser')
 const path           = require('path')
@@ -16,6 +17,9 @@ const swaggerUI      = require('swagger-ui-express');
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(upload.array('urlFile'));
+app.set('/uploads', express.static(path.join(__dirname, 'public/uploads/')));
 
 app.set('views', path.join(__dirname,'public/views/'))
 app.set('view engine', 'ejs')

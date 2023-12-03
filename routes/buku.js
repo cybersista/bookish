@@ -1,6 +1,8 @@
 const express            = require('express')
-const {bukuController}     = require('../controllers')
+const {bukuController}   = require('../controllers')
 const router             = express.Router()
+const { authentication,verifyRole }= require('../middlewares/auth');
+const roleList  = require('../config/role')
 
 /**
  * @swagger
@@ -34,7 +36,9 @@ const router             = express.Router()
  *           type: number
  *           format: char
  */
-// route.get('/', bukuController.getAll)
+router.get('/', bukuController.getAllBuku)
+router.get('/:nama', bukuController.getKategoriBuku)
+router.get('/penulis/:nama', bukuController.getPenulisBuku)
 /**
  * @swagger
  * /buku/{id}:
@@ -61,5 +65,7 @@ const router             = express.Router()
  *         description: Internal Server Error!
  */
 router.get('/detail-buku/:id', bukuController.detailBuku)
-
+router.post('/', authentication, verifyRole(roleList.Admin), bukuController.createBuku)
+router.put('/:id', authentication, verifyRole(roleList.Admin), bukuController.updateBuku)
+router.delete('/:id', authentication, verifyRole(roleList.Admin), bukuController.deleteBuku)
 module.exports = router
