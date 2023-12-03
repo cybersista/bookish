@@ -130,24 +130,24 @@ const Keranjang = () => {
   const [cart, setCart] = useState([
     {
       id: 1,
-      name: 'Product 1',
+      name: 'Novel Kata',
       image: 'https://via.placeholder.com/150',
-      price: 20000,
+      price: 89000,
       quantity: 2,
     },
     {
       id: 2,
-      name: 'Product 2',
+      name: 'Novel Bulan',
       image: 'https://via.placeholder.com/150',
-      price: 35000,
+      price: 90000,
       quantity: 3,
     },
     {
       id: 3,
-      name: 'Product 3',
+      name: 'Novel Bumi',
       image: 'https://via.placeholder.com/150',
-      price: 50000,
-      quantity: 3,
+      price: 85000,
+      quantity: 1,
     },
     // Add more products as needed
   ]);
