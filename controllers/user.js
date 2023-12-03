@@ -25,7 +25,7 @@ const getUserById = async (req, res, next) => {
     if (result) {
       res.status(200).json({status:200, message:`Success Get User With Id: ${userId}`, data:result});
     } else {
-      res.status(404).json({ status:404, message: 'Admin not found' });
+      res.status(403).json({ status: 403, message: 'Unauthorized access! Admin access required.' });
     }
   } catch (error) {
     next(error);

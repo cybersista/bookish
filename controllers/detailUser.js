@@ -28,6 +28,45 @@ const getAll = async (req, res, next) => {
     }
 };
 
+const createDetailUser = async (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = tokenVerifier(token);
+    const userId = decodedToken.userId; // Assuming userId is present in the decoded token
+    const { nama, alamat, kodePos, telepon } = req.body;
+
+    try {
+        // Check if detailUser already exists for the user
+        const existingDetailUser = await detailUser.findOne({ where: { userId } });
+
+        if (existingDetailUser) {
+            return res.status(400).json({ status: 400, error: 'DetailUser already exists for the user' });
+        }
+
+        // Create a new detailUser record
+        const newDetailUser = await detailUser.create({
+            userId,
+            nama,
+            alamat,
+            kodePos,
+            telepon
+        });
+
+        // Fetch the created detailUser record with associated User record
+        const result = await detailUser.findAll({
+            include: [{
+                model: User,
+                as: 'users',
+                attributes: ['email', 'password'],
+                where: { id: userId }
+            }]
+        });
+
+        res.status(201).json(result);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const updatedetailUser = async (req, res, next) =>{
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = tokenVerifier(token);
@@ -72,5 +111,6 @@ const updatedetailUser = async (req, res, next) =>{
 
 module.exports = {
     getAll,
-    updatedetailUser
+    updatedetailUser,
+    createDetailUser
 }
