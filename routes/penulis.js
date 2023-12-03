@@ -1,8 +1,7 @@
-const express            = require('express')
-const {penulisController}= require('../controllers')
-const router             = express.Router()
-const { authentication, verifyRole } = require('../middlewares/auth');
-const roleList           = require('../config/role')
+const express = require('express');
+const router = express.Router();
+const { getAllPenulis, getPenulisById, createPenulis, updatePenulis, deletePenulis } = require('../controllers/Penulis');
+const { authentication } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -23,7 +22,7 @@ const roleList           = require('../config/role')
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.get('/',  authentication, verifyRole(roleList.Admin), penulisController.getAllPenulis);
+router.get('/', getAllPenulis);
 
 /**
  * @swagger
@@ -46,7 +45,7 @@ router.get('/',  authentication, verifyRole(roleList.Admin), penulisController.g
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.get('/:id',  authentication, verifyRole(roleList.Admin), penulisController.getPenulisById);
+router.get('/:id', getPenulisById);
 
 /**
  * @swagger
@@ -74,7 +73,7 @@ router.get('/:id',  authentication, verifyRole(roleList.Admin), penulisControlle
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/add',  authentication, verifyRole(roleList.Admin), penulisController.createPenulis);
+router.post('/', authentication, createPenulis);
 
 /**
  * @swagger
@@ -111,7 +110,7 @@ router.post('/add',  authentication, verifyRole(roleList.Admin), penulisControll
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/edit/:id',  authentication, verifyRole(roleList.Admin), penulisController.updatePenulis);
+router.put('/:id', authentication, updatePenulis);
 
 /**
  * @swagger
@@ -138,6 +137,6 @@ router.put('/edit/:id',  authentication, verifyRole(roleList.Admin), penulisCont
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/delete/:id',  authentication, verifyRole(roleList.Admin), penulisController.deletePenulis);
+router.delete('/:id', authentication, deletePenulis);
 
-module.exports = router
+module.exports = router;
