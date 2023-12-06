@@ -1,6 +1,6 @@
 const express           = require('express');
 const router            = express.Router();
-const { userController, detailUserController, userPaymentController} = require('../controllers');
+const { userController, detailUserController, userPaymentController, authController} = require('../controllers');
 const { authentication,verifyRole }= require('../middlewares/auth');
 const roleList  = require('../config/role')
 
@@ -78,7 +78,7 @@ router.post('/detail/add-payment', authentication, verifyRole(roleList.Member), 
  *       500:
  *         description: Internal Server Error
  */
-router.post('/members/register', registerMember);
+// router.post('/members/register', registerMember);
 
 /**
  * @swagger
@@ -180,7 +180,7 @@ router.delete('/detail/delete-payment/:id', authentication, verifyRole(roleList.
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/members', authentication, getAllMembers);
+// router.get('/members', authentication, getAllMembers);
 
 /**
  * @swagger
@@ -211,7 +211,7 @@ router.get('/members', authentication, getAllMembers);
  *       500:
  *         description: Internal Server Error!
  */
-router.get('/members/:id', authentication, getMemberById);
+// router.get('/members/:id', authentication, getMemberById);
 
 /**
  * @swagger
@@ -229,6 +229,6 @@ router.get('/members/:id', authentication, getMemberById);
  *       500:
  *         description: Internal Server Error!
  */
-router.post('/logout', authentication, logout);
+router.post('/logout', authentication, authController.logout);
 
 module.exports = router;
