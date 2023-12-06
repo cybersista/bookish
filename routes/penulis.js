@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { getAllPenulis, getPenulisById, createPenulis, updatePenulis, deletePenulis } = require('../controllers/Penulis');
-const { authentication } = require('../middlewares/auth');
+const express            = require('express')
+const {penulisController}= require('../controllers')
+const router             = express.Router()
+const { authentication, verifyRole } = require('../middlewares/auth');
+const roleList           = require('../config/role')
 
 /**
  * @swagger
@@ -22,7 +23,7 @@ const { authentication } = require('../middlewares/auth');
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.get('/', getAllPenulis);
+router.get('/',  authentication, verifyRole(roleList.Admin), penulisController.getAllPenulis);
 
 /**
  * @swagger
@@ -45,7 +46,7 @@ router.get('/', getAllPenulis);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.get('/:id', getPenulisById);
+router.get('/:id',  authentication, verifyRole(roleList.Admin), penulisController.getPenulisById);
 
 /**
  * @swagger
@@ -73,7 +74,7 @@ router.get('/:id', getPenulisById);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.post('/', authentication, createPenulis);
+router.post('/add',  authentication, verifyRole(roleList.Admin), penulisController.createPenulis);
 
 /**
  * @swagger
@@ -110,7 +111,7 @@ router.post('/', authentication, createPenulis);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.put('/:id', authentication, updatePenulis);
+router.put('/edit/:id',  authentication, verifyRole(roleList.Admin), penulisController.updatePenulis);
 
 /**
  * @swagger
@@ -137,6 +138,6 @@ router.put('/:id', authentication, updatePenulis);
  *       500:
  *         description: Kesalahan Server Internal
  */
-router.delete('/:id', authentication, deletePenulis);
+router.delete('/delete/:id',  authentication, verifyRole(roleList.Admin), penulisController.deletePenulis);
 
-module.exports = router;
+module.exports = router
